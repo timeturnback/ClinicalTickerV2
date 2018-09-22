@@ -2,9 +2,9 @@ import Expo , { SQLite, FileSystem, Asset } from 'expo';
 import { database } from "../../config/sqlite3";
 import * as c from "../../config/constants";
 
-export async function checkDatabase()
+export function checkDatabase(callback)
 {
-	await database.transaction(
+	database.transaction(
       tx => {
         tx.executeSql('select Version from INFO', 
         	[], 
@@ -13,12 +13,12 @@ export async function checkDatabase()
           		if (versiondata.Version !== c.APP_DATA_VERSION) 
           			{
         				console.log("wrong version download");
-          				downloadDatabase();
-          			}
+          				downloadDatabase(callback);
+          			} else callback(true);
           		},
         	(_,error) => {
         		console.log("no database download");
-        		downloadDatabase();
+        		downloadDatabase(callback);
         		});
       },
       null,
@@ -26,7 +26,7 @@ export async function checkDatabase()
     );
 }
 
-export function downloadDatabase()
+export function downloadDatabase(callback)
 {
 	FileSystem.downloadAsync(
 	  Asset.fromModule(require('../../assets/data/pnt2data.db')).uri,
@@ -34,6 +34,7 @@ export function downloadDatabase()
 	)
 	  .then(({ uri }) => {
 	    console.log('Finished downloading to ', uri);
+	    callback(true);
 	  })
 	  .catch(error => {
 	    console.error(error);

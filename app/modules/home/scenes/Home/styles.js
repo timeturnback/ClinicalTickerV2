@@ -24,7 +24,13 @@ const styles = StyleSheet.create({
     	color: color.white,
         fontSize: fontSize.regular + 5,
         fontFamily: fontFamily.bold,
-    }
+    },
+
+    activityIndicator:{
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: "center"
+    },
 });
 
 

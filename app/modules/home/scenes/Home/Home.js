@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
@@ -18,10 +18,18 @@ class Home extends React.Component {
 
     componentDidMount()
     {
-        checkDatabase();
+        this.props.checkDatabase();
     }
 
     render() {
+        if (this.props.data_loading){
+            return(
+                <View style={styles.activityIndicator}>
+                    <ActivityIndicator animating={true} />
+                </View>
+            )}
+        else if (this.props.data_available)
+        {
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NOI})}>
@@ -51,7 +59,22 @@ class Home extends React.Component {
                 </TouchableOpacity>
             </View>
             )
+        }
+        else {
+            return(
+            <View style={styles.container}>
+                <Text> Error ! Can't load data </Text>
+            </View>
+            )
+        }
     }
 }
 
-export default connect(null,null)(Home);
+function mapStateToProps(state, props) {
+    return {
+        data_loading: state.homeReducer.data_loading,
+        data_available: state.homeReducer.data_available
+    }
+}
+
+export default connect(mapStateToProps,{checkDatabase})(Home);
