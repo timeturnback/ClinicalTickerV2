@@ -8,12 +8,13 @@ import {actions as home, theme} from "../../index"
 import * as c from "../../constants"
 
 const {color} = theme;
-const {checkDatabase} = home;
+const {checkDatabase,getChecklists} = home;
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.onCategoryPress = this.onCategoryPress.bind(this);
     }
 
     componentDidMount()
@@ -21,17 +22,28 @@ class Home extends React.Component {
         this.props.checkDatabase();
     }
 
+    onCategoryPress(category)
+    {
+        this.props.getChecklists(category, (error) => alert(error.message));
+        Actions.ChecklistBoard();
+    }
+
     render() {
-        if (this.props.data_loading){
+        if (this.props.isDataLoading){
             return(
                 <View style={styles.activityIndicator}>
                     <ActivityIndicator animating={true} />
                 </View>
             )}
-        else if (this.props.data_available)
+        else if (this.props.isDataAvailable)
         {
         return (
             <View style={styles.container}>
+                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
+                    <View style={[styles.button, {backgroundColor: 'blue'}]}>
+                        <Text style={styles.buttonText}> Sản </Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NOI})}>
                     <View style={[styles.button, {backgroundColor: color.red}]}>
                         <Text style={styles.buttonText}> Nội </Text>
@@ -40,11 +52,6 @@ class Home extends React.Component {
                 <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NGOAI})}>
                     <View style={[styles.button, {backgroundColor: 'green'}]}>
                         <Text style={styles.buttonText}> Ngoại </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_SAN})}>
-                    <View style={[styles.button, {backgroundColor: 'blue'}]}>
-                        <Text style={styles.buttonText}> Sản </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NHI})}>
@@ -72,9 +79,9 @@ class Home extends React.Component {
 
 function mapStateToProps(state, props) {
     return {
-        data_loading: state.homeReducer.data_loading,
-        data_available: state.homeReducer.data_available
+        isDataLoading: state.homeReducer.isDataLoading,
+        isDataAvailable: state.homeReducer.isDataAvailable,
     }
 }
 
-export default connect(mapStateToProps,{checkDatabase})(Home);
+export default connect(mapStateToProps,{checkDatabase,getChecklists})(Home);

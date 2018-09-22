@@ -1,20 +1,28 @@
 import * as t from './actionTypes';
 
 let initialState = {
-	data_loading: false,
-	data_available: false
+	isDataLoading: false,
+	isDataAvailable: false,
+	isChecklistsAvailable: false,
+	checklists: [],
 };
 
 const homeReducer = (state = initialState, action) => {
     switch (action.type) {
         case t.DATA_LOADING:
         {
-        	return {...state, data_loading: true}
+        	return {...state, isDataLoading: true}
         }
 
         case t.DATA_AVAILABLE:
     	{
-        	return {...state, data_loading: false, data_available: true}
+        	return {...state, isDataLoading: false, isDataAvailable: true}
+    	}
+
+    	case t.CHECKLISTS_AVAILABLE:
+    	{
+            const { data } = action;
+        	return {...state, isChecklistsAvailable: true, checklists: data}
     	}
 
         default:

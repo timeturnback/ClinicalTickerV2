@@ -12,7 +12,12 @@ const styles = StyleSheet.create({
     },
     flatList:{
     	flex: 1,
-    }
+    },
+    activityIndicator:{
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: "center"
+    },
 });
 
 

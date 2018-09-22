@@ -1,2 +1,5 @@
 export const DATA_LOADING = 'home/DATA_LOADING';
 export const DATA_AVAILABLE = 'home/DATA_AVAILABLE';
+
+export const CHECKLISTS_LOADING = 'home/CHECKLISTS_LOADING';
+export const CHECKLISTS_AVAILABLE = 'home/CHECKLISTS_AVAILABLE';

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, ActivityIndicator} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
@@ -16,18 +16,20 @@ class ChecklistBoard extends React.Component {
     renderItem({item, index})
     {
         return (
-            <Text> asdasd {item.name} </Text>
+            <Text> {item.title} </Text>
             )
     }
 
     render() {
-        const checklists = [];
-        checklists.push({name: 'bangkiem1'});
-        checklists.push({name: 'bangkiem2'});
-        checklists.push({name: 'bangkiem3'});
-        checklists.push({name: 'bangkiem4'});
-        checklists.push({name: 'bangkiem5'});
-
+        const {checklists} = this.props;
+        if (!this.props.isChecklistsAvailable){
+            return(
+                <View style={styles.activityIndicator}>
+                    <ActivityIndicator animating={true} />
+                </View>
+            )}
+        else
+        {
         return (
             <View style={styles.container}>
                 <FlatList
@@ -38,7 +40,15 @@ class ChecklistBoard extends React.Component {
                     keyExtractor={(item, index) => index.toString()}/>
             </View>
             )
+        }
     }
 }
 
-export default connect(null,null)(ChecklistBoard);
+function mapStateToProps(state, props) {
+    return {
+        isChecklistsAvailable: state.homeReducer.isChecklistsAvailable,
+        checklists: state.homeReducer.checklists,
+    }
+}
+
+export default connect(mapStateToProps,null)(ChecklistBoard);

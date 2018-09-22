@@ -11,3 +11,14 @@ export function checkDatabase()
 			});
 	};
 }
+
+export function getChecklists(category,errorCB)
+{
+	return (dispatch) => {
+		api.getChecklists(category, function(success,data,error)
+		{
+			if (success) dispatch({type: t.CHECKLISTS_AVAILABLE, data: data});
+			if (error) errorCB(error);
+		})
+	}
+}
