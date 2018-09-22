@@ -1,0 +1,41 @@
+import Expo , { SQLite, FileSystem, Asset } from 'expo';
+import { database } from "../../config/sqlite3";
+import * as c from "../../config/constants";
+
+export async function checkDatabase()
+{
+	await database.transaction(
+      tx => {
+        tx.executeSql('select Version from INFO', 
+        	[], 
+        	(_, { rows }) =>{
+          		let versiondata = rows._array[0];
+          		if (versiondata.Version !== c.APP_DATA_VERSION) 
+          			{
+        				console.log("wrong version download");
+          				downloadDatabase();
+          			}
+          		},
+        	(_,error) => {
+        		console.log("no database download");
+        		downloadDatabase();
+        		});
+      },
+      null,
+      null
+    );
+}
+
+export function downloadDatabase()
+{
+	FileSystem.downloadAsync(
+	  Asset.fromModule(require('../../assets/data/pnt2data.db')).uri,
+	  FileSystem.documentDirectory + 'SQLite/' + c.APP_DATABASE_LOCAL_NAME
+	)
+	  .then(({ uri }) => {
+	    console.log('Finished downloading to ', uri);
+	  })
+	  .catch(error => {
+	    console.error(error);
+	  });
+}

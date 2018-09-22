@@ -4,14 +4,21 @@ import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
 import styles from "./styles"
-import {theme} from "../../index"
+import {actions as home, theme} from "../../index"
 import * as c from "../../constants"
 
 const {color} = theme;
+const {checkDatabase} = home;
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.componentDidMount = this.componentDidMount.bind(this);
+    }
+
+    componentDidMount()
+    {
+        checkDatabase();
     }
 
     render() {
