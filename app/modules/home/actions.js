@@ -15,9 +15,22 @@ export function checkDatabase()
 export function getChecklists(category,errorCB)
 {
 	return (dispatch) => {
+		dispatch({type: t.CHECKLISTS_LOADING});
 		api.getChecklists(category, function(success,data,error)
 		{
 			if (success) dispatch({type: t.CHECKLISTS_AVAILABLE, data: data});
+			if (error) errorCB(error);
+		})
+	}
+}
+
+export function getChecklist(sheetname,errorCB)
+{
+	return (dispatch) => {
+		dispatch({type: t.CHECKLIST_LOADING});
+		api.getChecklist(sheetname, function(success,data,error)
+		{
+			if (success) dispatch({type: t.CHECKLIST_AVAILABLE, data: data});
 			if (error) errorCB(error);
 		})
 	}

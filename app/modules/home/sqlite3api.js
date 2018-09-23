@@ -43,10 +43,27 @@ export function downloadDatabase(callback)
 
 export function getChecklists(category, callback)
 {
-	console.log("getChecklists");
 	database.transaction(
 		tx => {
 			tx.executeSql("select * from LISTTABLE where category = '" + category + "'",
+				[],
+				(_,{rows}) => {
+					callback(true,rows._array,null);
+				},
+				(_,error)=>{
+					callback(false,null,error);
+				}),
+			null,
+			null
+			}
+		);
+}
+
+export function getChecklist(sheetname, callback)
+{
+	database.transaction(
+		tx => {
+			tx.executeSql("select * from " + sheetname,
 				[],
 				(_,{rows}) => {
 					callback(true,rows._array,null);

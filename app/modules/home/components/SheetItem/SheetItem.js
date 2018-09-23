@@ -8,7 +8,7 @@ import {actions as home} from "../../index"
 
 const {getChecklist} = home;
 
-class JobItem extends React.Component {
+class SheetItem extends React.Component {
     constructor(props) {
         super(props);
 
@@ -17,7 +17,9 @@ class JobItem extends React.Component {
 
     onPress()
     {
-        
+        const {item} = this.props;
+        this.props.getChecklist(item.tablename,(error) => alert(error.message));
+        Actions.Checklist({sheet: item});
     }
 
     render() {
@@ -27,7 +29,7 @@ class JobItem extends React.Component {
             <View style={styles.container}>
                 <TouchableOpacity onPress={this.onPress}>
                     <View style={[styles.wrapper, {backgroundColor: color, borderColor: color}]}>
-                        <Text style={styles.text}> {item.str} </Text>
+                        <Text style={styles.text}> {item.title} </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -35,4 +37,4 @@ class JobItem extends React.Component {
     }
 }
 
-export default connect(null,{getChecklist})(JobItem);
+export default connect(null,{getChecklist})(SheetItem);
