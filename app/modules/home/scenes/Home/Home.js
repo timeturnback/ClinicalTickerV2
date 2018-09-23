@@ -39,29 +39,34 @@ class Home extends React.Component {
         {
         return (
             <View style={styles.container}>
+                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
+                    <View style={[styles.button, {backgroundColor: 'orange'}]}>
+                        <Text style={styles.buttonText}> Nội </Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
                     <View style={[styles.button, {backgroundColor: 'blue'}]}>
                         <Text style={styles.buttonText}> Sản </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NOI})}>
+                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_KYNANG_DIEUDUONG})}>
                     <View style={[styles.button, {backgroundColor: color.red}]}>
-                        <Text style={styles.buttonText}> Nội </Text>
+                        <Text style={styles.buttonText}> Kỹ năng điều dưỡng </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NGOAI})}>
+                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_KYNANG})}>
                     <View style={[styles.button, {backgroundColor: 'green'}]}>
-                        <Text style={styles.buttonText}> Ngoại </Text>
+                        <Text style={styles.buttonText}> Kỹ năng </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NHI})}>
+                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_DIEUDUONG})}>
                     <View style={[styles.button, {backgroundColor: 'cyan'}]}>
-                        <Text style={styles.buttonText}> Nhi </Text>
+                        <Text style={styles.buttonText}> Điều dưỡng </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_NHIEM})}>
+                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_KSNK})}>
                     <View style={[styles.button, {backgroundColor: 'orange'}]}>
-                        <Text style={styles.buttonText}> Nhiễm </Text>
+                        <Text style={styles.buttonText}> KSNK </Text>
                     </View>
                 </TouchableOpacity>
             </View>
