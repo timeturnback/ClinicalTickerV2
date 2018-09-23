@@ -3,6 +3,8 @@ import {View, Text, FlatList, ActivityIndicator} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
+import JobItem from '../../components/JobItem'
+
 import styles from "./styles"
 import {theme} from "../../index"
 
@@ -16,7 +18,7 @@ class ChecklistBoard extends React.Component {
     renderItem({item, index})
     {
         return (
-            <Text> {item.title} </Text>
+            <JobItem item={item}/>
             )
     }
 
