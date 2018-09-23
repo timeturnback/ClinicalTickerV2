@@ -17,6 +17,8 @@ class ChecklistBoard extends React.Component {
 
     renderItem({item, index})
     {
+        let color = '#acacac';
+        if (index % 2 == 0) color = '#fff';
         return (
             <JobItem item={item}/>
             )
