@@ -4,7 +4,6 @@ let initialState = {
 	isDataLoading: false,
 	isDataAvailable: false,
 	isChecklistsAvailable: false,
-    isChecklistAvailable: false,
 	checklists: [],
     currentchecklist: {},
 };
@@ -32,13 +31,6 @@ const homeReducer = (state = initialState, action) => {
             const { data } = action;
         	return {...state, isChecklistsAvailable: true, checklists: data}
     	}
-
-
-        case t.CHECKLIST_LOADING:
-        {
-            currentchecklist = {};
-            return {...state, isChecklistAvailable: false, currentchecklist: currentchecklist}
-        }
 
         case t.CHECKLIST_AVAILABLE:
         {

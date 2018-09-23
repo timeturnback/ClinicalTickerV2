@@ -13,13 +13,19 @@ class SheetItem extends React.Component {
         super(props);
 
         this.onPress = this.onPress.bind(this);
+        this.gotoChecklist = this.gotoChecklist.bind(this);
     }
 
     onPress()
     {
         const {item} = this.props;
-        this.props.getChecklist(item.tablename,(error) => alert(error.message));
-        Actions.Checklist({sheet: item});
+        getChecklist(item.tablename,this.gotoChecklist,(error) => alert(error.message));
+    }
+
+    gotoChecklist(data)
+    {
+        const {item} = this.props;
+        Actions.Checklist({sheet: item,joblist: data});
     }
 
     render() {
@@ -37,4 +43,4 @@ class SheetItem extends React.Component {
     }
 }
 
-export default connect(null,{getChecklist})(SheetItem);
+export default connect(null,{})(SheetItem);

@@ -24,14 +24,14 @@ export function getChecklists(category,errorCB)
 	}
 }
 
-export function getChecklist(sheetname,errorCB)
+export function getChecklist(sheetname,successCB,errorCB)
 {
-	return (dispatch) => {
-		dispatch({type: t.CHECKLIST_LOADING});
-		api.getChecklist(sheetname, function(success,data,error)
-		{
-			if (success) dispatch({type: t.CHECKLIST_AVAILABLE, data: data});
-			if (error) errorCB(error);
-		})
-	}
+	api.getChecklist(sheetname, function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		if (error) errorCB(error);
+	})
 }

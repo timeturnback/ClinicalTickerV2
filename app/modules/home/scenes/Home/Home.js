@@ -49,22 +49,22 @@ class Home extends React.Component {
                         <Text style={styles.buttonText}> Sản </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_KYNANG_DIEUDUONG})}>
+                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG_DIEUDUONG)}>
                     <View style={[styles.button, {backgroundColor: color.red}]}>
                         <Text style={styles.buttonText}> Kỹ năng điều dưỡng </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_KYNANG})}>
+                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
                     <View style={[styles.button, {backgroundColor: 'green'}]}>
                         <Text style={styles.buttonText}> Kỹ năng </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_DIEUDUONG})}>
+                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
                     <View style={[styles.button, {backgroundColor: 'cyan'}]}>
                         <Text style={styles.buttonText}> Điều dưỡng </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>Actions.ChecklistBoard({category: c.CATEGORY_KSNK})}>
+                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
                     <View style={[styles.button, {backgroundColor: 'orange'}]}>
                         <Text style={styles.buttonText}> KSNK </Text>
                     </View>

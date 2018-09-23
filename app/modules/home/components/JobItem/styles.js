@@ -2,6 +2,7 @@ import { StyleSheet, Platform } from 'react-native';
 
 import {theme} from "../../index"
 const {color, normalize, fontFamily} = theme;
+const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
     container: {
@@ -26,13 +27,28 @@ const styles = StyleSheet.create({
                 },
             }),
         },
-		    text:{
-		        fontSize: normalize(17),
-		        lineHeight: normalize(21),
-		        color: color.black,
-		        textAlign: 'left',
-		        fontFamily: fontFamily.medium
-		    },
+            itemContainer:{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            },
+
+                icon: {
+                    flex: 1,
+                    width: 40,
+                    height: 40,
+                    resizeMode
+                },
+
+    		    text:{
+                    flex: 6,
+    		        fontSize: normalize(17),
+    		        lineHeight: normalize(21),
+    		        color: color.black,
+    		        textAlign: 'left',
+    		        fontFamily: fontFamily.medium
+    		    },
 
 });
 
