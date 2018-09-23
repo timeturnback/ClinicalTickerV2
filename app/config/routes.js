@@ -4,6 +4,7 @@ import {Scene, Router, ActionConst, Stack, Modal, Tabs, Actions} from 'react-nat
 //Home scene
 import Home from '../modules/home/scenes/Home';
 import ChecklistBoard from '../modules/home/scenes/ChecklistBoard';
+import Checklist from '../modules/home/scenes/Checklist';
 
 //support component
 import NavButton from '../components/NavButton';
@@ -45,6 +46,11 @@ export default class extends React.Component {
               <Scene key="ChecklistBoard"
                 component={ChecklistBoard} title="Danh sách bảng kiểm"
                 navigationBarStyle={{backgroundColor: "#fff"}}
+                titleStyle={navTitleStyle}
+                renderLeftButton={this.renderCloseButton}/>
+              <Scene key="Checklist"
+                component={Checklist} title="Bảng kiểm"
+                hideNavBar={true}
                 titleStyle={navTitleStyle}
                 renderLeftButton={this.renderCloseButton}/>
             </Stack>
