@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator, StatusBar, Image} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator, StatusBar, Image, ImageBackground} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 
@@ -42,7 +43,7 @@ class Home extends React.Component {
         else if (this.props.isDataAvailable)
         {
         return (
-            <View style={styles.container}>
+            <ImageBackground style={styles.container} source={require('../../../../assets/png/home.png')}>
                 <StatusBar hidden={true} />
                 <View style={styles.categoryContainer}>
                     <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
@@ -70,7 +71,30 @@ class Home extends React.Component {
                         <Image style={styles.imageNhiem} source={require('../../../../assets/png/m_bt_nhiem.png')}/>
                     </TouchableOpacity>
                 </View>
-            </View>
+                <View style={styles.bottomContainer}>
+                    <TouchableOpacity style={styles.historyIcon}>
+                        <FontAwesome 
+                            raised
+                            name='history'
+                            color='#353535'
+                            size={35} />
+                    </TouchableOpacity>
+                    <View style={styles.recentTitle}>
+                        <Text style={styles.titleText}> RECENT </Text>
+                    </View>
+                    <View style={styles.recentItems}>
+                        <TouchableOpacity style={styles.itemTO}>
+                            <Text style={styles.itemText}> Hỏi para sản khoa </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.itemTO}>
+                            <Text style={styles.itemText}> Bảng kiểm găng y tế </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.itemTO}>
+                            <Text style={styles.itemText}> Hỏi nội khoa </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ImageBackground>
             )
         }
         else {
