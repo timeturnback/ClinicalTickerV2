@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, FlatList, ActivityIndicator} from 'react-native';
+import {View, Text, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {Icon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
@@ -8,7 +9,7 @@ import SheetItem from '../../components/SheetItem'
 import styles from "./styles"
 import {theme} from "../../index"
 
-const {color} = theme;
+const {color, normalize} = theme;
 
 class ChecklistBoard extends React.Component {
     constructor(props) {
@@ -36,12 +37,30 @@ class ChecklistBoard extends React.Component {
         {
         return (
             <View style={styles.container}>
-                <FlatList
-                    style={styles.flatList}
-                    data={checklists}
-                    renderItem={this.renderItem}
-                    initialNumToRender={8}
-                    keyExtractor={(item, index) => index.toString()}/>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>
+                        Danh sách bảng kiểm
+                    </Text>
+                </View>
+                <View style={styles.flatListContainer}>
+                    <FlatList
+                        style={styles.flatList}
+                        data={checklists}
+                        renderItem={this.renderItem}
+                        initialNumToRender={8}
+                        keyExtractor={(item, index) => index.toString()}/>
+                </View>
+                <View style={styles.bottomContainer}>
+                    <TouchableOpacity onPress={Actions.pop}>
+                        <Icon
+                            name='ios-arrow-back'
+                            type='ionicon'
+                            color={color.black}
+                            iconStyle={{height:normalize(40)}}
+                            size={normalize(40)}
+                            />
+                    </TouchableOpacity>
+                </View>
             </View>
             )
         }

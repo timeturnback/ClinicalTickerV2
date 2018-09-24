@@ -45,10 +45,10 @@ export default class extends React.Component {
                 initial={true} 
                 type={ActionConst.REPLACE}/>
               <Scene key="ChecklistBoard"
-                component={ChecklistBoard} title="Danh sách bảng kiểm"
+                component={ChecklistBoard} 
+                hideNavBar={true}
                 navigationBarStyle={{backgroundColor: "#fff"}}
-                titleStyle={navTitleStyle}
-                renderLeftButton={this.renderCloseButton}/>
+                titleStyle={navTitleStyle}/>
               <Scene key="Checklist"
                 component={Checklist}
                 hideNavBar={true}

@@ -76,6 +76,11 @@ class Result extends React.Component {
         
     }
 
+    onHome()
+    {
+        Actions.popTo('Home');
+    }
+
     renderFlatList()
     {
         const {tasklist,score} = this.props;
@@ -152,12 +157,12 @@ class Result extends React.Component {
                             name='ios-arrow-back'
                             type='ionicon'
                             color={color.black}
-                            iconStyle={{height:normalize(60)}}
-                            size={normalize(60)}
+                            iconStyle={{height:normalize(50)}}
+                            size={normalize(50)}
                             />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.onSubmit}>
-                        <Text style={styles.buttonText}> Done </Text>
+                    <TouchableOpacity onPress={this.onHome}>
+                        <Text style={styles.buttonText}> HOME </Text>
                     </TouchableOpacity>
                 </View>
             </View>

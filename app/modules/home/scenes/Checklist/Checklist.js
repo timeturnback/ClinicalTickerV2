@@ -76,12 +76,12 @@ class Checklist extends React.Component {
                             name='ios-arrow-back'
                             type='ionicon'
                             color={color.black}
-                            iconStyle={{height:normalize(60)}}
-                            size={normalize(60)}
+                            iconStyle={{height:normalize(50)}}
+                            size={normalize(50)}
                             />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this.onSubmit}>
-                        <Text style={styles.buttonText}> Done </Text>
+                        <Text style={styles.buttonText}> DONE </Text>
                     </TouchableOpacity>
                 </View>
             </View>
