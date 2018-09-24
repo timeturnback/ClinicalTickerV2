@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator, StatusBar} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
@@ -39,6 +39,7 @@ class Home extends React.Component {
         {
         return (
             <View style={styles.container}>
+                <StatusBar hidden={true} />
                 <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
                     <View style={[styles.button, {backgroundColor: 'orange'}]}>
                         <Text style={styles.buttonText}> Nội </Text>

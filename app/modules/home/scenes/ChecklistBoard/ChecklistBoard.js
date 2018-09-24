@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, ActivityIndicator, TouchableOpacity, StatusBar} from 'react-native';
 import {Icon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
@@ -37,6 +37,7 @@ class ChecklistBoard extends React.Component {
         {
         return (
             <View style={styles.container}>
+                <StatusBar hidden={false} />
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>
                         Danh sách bảng kiểm
