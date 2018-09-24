@@ -45,7 +45,7 @@ export function getChecklists(category, callback)
 {
 	database.transaction(
 		tx => {
-			tx.executeSql("select * from LISTTABLE where category = '" + category + "'",
+			tx.executeSql("select * from LISTTABLE where category like '%" + category + "%'",
 				[],
 				(_,{rows}) => {
 					callback(true,rows._array,null);

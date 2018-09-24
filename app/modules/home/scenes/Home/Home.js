@@ -24,8 +24,12 @@ class Home extends React.Component {
 
     onCategoryPress(category)
     {
-        this.props.getChecklists(category, (error) => alert(error.message));
-        Actions.ChecklistBoard();
+        getChecklists(category,this.onSuccess,(error) => {alert(error.message)});
+    }
+
+    onSuccess(data)
+    {
+        Actions.ChecklistBoard({checklists: data});
     }
 
     render() {
@@ -86,4 +90,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps,{checkDatabase,getChecklists})(Home);
+export default connect(mapStateToProps,{checkDatabase})(Home);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, ActivityIndicator, TouchableOpacity, StatusBar} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, StatusBar} from 'react-native';
 import {Icon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
@@ -27,14 +27,6 @@ class ChecklistBoard extends React.Component {
 
     render() {
         const {checklists} = this.props;
-        if (!this.props.isChecklistsAvailable){
-            return(
-                <View style={styles.activityIndicator}>
-                    <ActivityIndicator animating={true} />
-                </View>
-            )}
-        else
-        {
         return (
             <View style={styles.container}>
                 <StatusBar hidden={false} />
@@ -64,14 +56,12 @@ class ChecklistBoard extends React.Component {
                 </View>
             </View>
             )
-        }
     }
 }
 
 function mapStateToProps(state, props) {
     return {
-        isChecklistsAvailable: state.homeReducer.isChecklistsAvailable,
-        checklists: state.homeReducer.checklists,
+        isChecklistsAvailable: state.homeReducer.isChecklistsAvailable
     }
 }
 
