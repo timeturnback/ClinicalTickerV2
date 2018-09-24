@@ -145,7 +145,7 @@ class Result extends React.Component {
                         {score.userscore}
                     </Text>
                     <Text style={styles.totalPoint}>
-                        {score.totalscore}
+                        / {score.totalscore}
                     </Text>
                 </View>
                 

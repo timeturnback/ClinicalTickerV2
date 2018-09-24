@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator, StatusBar} from 'react-native';
-import {Actions} from 'react-native-router-flux'
+import {View, Text, TouchableOpacity, ActivityIndicator, StatusBar, Image} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 
 import styles from "./styles"
@@ -40,36 +40,32 @@ class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <StatusBar hidden={true} />
-                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
-                    <View style={[styles.button, {backgroundColor: 'orange'}]}>
-                        <Text style={styles.buttonText}> Nội </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
-                    <View style={[styles.button, {backgroundColor: 'blue'}]}>
-                        <Text style={styles.buttonText}> Sản </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG_DIEUDUONG)}>
-                    <View style={[styles.button, {backgroundColor: color.red}]}>
-                        <Text style={styles.buttonText}> Kỹ năng điều dưỡng </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
-                    <View style={[styles.button, {backgroundColor: 'green'}]}>
-                        <Text style={styles.buttonText}> Kỹ năng </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
-                    <View style={[styles.button, {backgroundColor: 'cyan'}]}>
-                        <Text style={styles.buttonText}> Điều dưỡng </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
-                    <View style={[styles.button, {backgroundColor: 'orange'}]}>
-                        <Text style={styles.buttonText}> KSNK </Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={styles.categoryContainer}>
+                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
+                        <Image style={styles.imageNoi} source={require('../../../../assets/png/m_bt_noi.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
+                        <Image style={styles.imageSan} source={require('../../../../assets/png/m_bt_san.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
+                        <Image style={styles.imageKyNang} source={require('../../../../assets/png/m_bt_skill.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
+                        <Image style={styles.imageDieuDuong} source={require('../../../../assets/png/m_bt_dieuduong.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
+                        <Image style={styles.imageKhac} source={require('../../../../assets/png/m_bt_other.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image style={styles.imageNgoai} source={require('../../../../assets/png/m_bt_ngoai.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image style={styles.imageNhi} source={require('../../../../assets/png/m_bt_nhi.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image style={styles.imageNhiem} source={require('../../../../assets/png/m_bt_nhiem.png')}/>
+                    </TouchableOpacity>
+                </View>
             </View>
             )
         }

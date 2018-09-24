@@ -3,7 +3,7 @@ import { database } from "../../config/sqlite3";
 import * as c from "../../config/constants";
 
 export function checkDatabase(callback)
-{
+{	
 	database.transaction(
       	tx => {
 	        tx.executeSql('select Version from INFO', 

@@ -20,7 +20,6 @@ class Checklist extends React.Component {
 
         this.renderItem = this.renderItem.bind(this);
         this.onItemChange = this.onItemChange.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 

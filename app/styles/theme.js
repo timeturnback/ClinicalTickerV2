@@ -1,5 +1,5 @@
 import { Dimensions, Platform } from 'react-native';
-import { moderateScale as normalize } from 'react-native-size-matters';
+import { moderateScale as normalize, scale } from 'react-native-size-matters';
 
 const color = {
     black: "#3B3031",
@@ -49,5 +49,6 @@ export {
     windowHeight,
     tabIconStyle,
     navTitleStyle,
-    normalize
+    normalize,
+    scale
 }
