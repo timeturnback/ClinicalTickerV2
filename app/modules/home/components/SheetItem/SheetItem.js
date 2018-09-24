@@ -25,7 +25,7 @@ class SheetItem extends React.Component {
     gotoChecklist(data)
     {
         const {item} = this.props;
-        Actions.Checklist({sheet: item,joblist: data});
+        Actions.Checklist({sheet: item,tasklist: data});
     }
 
     render() {

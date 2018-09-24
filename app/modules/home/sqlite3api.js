@@ -76,3 +76,21 @@ export function getChecklist(sheetname, callback)
 			}
 		);
 }
+
+export function getNextSheet(sheetname, callback)
+{
+	database.transaction(
+		tx => {
+			tx.executeSql("select * from LISTTABLE where tablename = '" + sheetname + "'",
+				[],
+				(_,{rows}) => {
+					callback(true,rows._array[0],null);
+				},
+				(_,error)=>{
+					callback(false,null,error);
+				}),
+			null,
+			null
+			}
+		);
+}

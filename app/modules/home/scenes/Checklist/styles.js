@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
             flatList:{
             	flex: 1,
             },
-
         bottomContainer:{
             flex:1,
             flexDirection: 'row',

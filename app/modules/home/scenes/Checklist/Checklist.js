@@ -2,9 +2,7 @@ import React from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
-import {connect} from 'react-redux';
-
-import JobItem from '../../components/JobItem'
+import TaskItem from '../../components/TaskItem'
 import {theme} from "../../index"
 
 import styles from "./styles"
@@ -15,27 +13,31 @@ class Checklist extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state =
+        {
+            score: []
+        };
+
         this.renderItem = this.renderItem.bind(this);
         this.onItemChange = this.onItemChange.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentDidMount()
-    {
-        const {joblist} = this.props;
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const {tasklist} = nextProps;
         let score = [];
-        joblist.map((job,index) => {
+        tasklist.map((task,index) => {
             score[index] = 0;
         });
-        this.setState({
-            score: score,
-        });
+        return { score: score };
     }
 
     onSubmit()
     {
-        // Actions.Result();
+        const {sheet, tasklist} = this.props;
+        let {score} = this.state;
+        Actions.Result({sheet,tasklist,score});
     }
 
     onItemChange(index, iconstate)
@@ -52,18 +54,18 @@ class Checklist extends React.Component {
         let color = '#acacac';
         if (index % 2 == 0) color = '#fff';
         return (
-            <JobItem item={item} index={index} callback={this.onItemChange}/>
+            <TaskItem item={item} index={index} callback={this.onItemChange}/>
             )
     }
 
     render() {
-        const {joblist} = this.props;
+        const {tasklist} = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.flatListContainer}>
                     <FlatList
                     style={styles.flatList}
-                    data={joblist}
+                    data={tasklist}
                     renderItem={this.renderItem}
                     initialNumToRender={8}
                     keyExtractor={(item, index) => index.toString()}/>
@@ -86,4 +88,4 @@ class Checklist extends React.Component {
             )
     }
 }
-export default connect(null,{})(Checklist);
+export default Checklist;

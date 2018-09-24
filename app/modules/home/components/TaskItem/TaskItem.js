@@ -8,7 +8,7 @@ import {actions as home} from "../../index"
 
 const {getChecklist} = home;
 
-class JobItem extends React.Component {
+class TaskItem extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,6 +20,13 @@ class JobItem extends React.Component {
         this.onPress = this.onPress.bind(this);
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        return {
+            iconsource: require('../../../../assets/png/check_green_bg.png'),
+            iconstate: 0
+        };
+    }
+    
     onPress()
     {
         let iconstate = this.state.iconstate;
@@ -63,4 +70,4 @@ class JobItem extends React.Component {
     }
 }
 
-export default connect(null,{getChecklist})(JobItem);
+export default connect(null,{getChecklist})(TaskItem);

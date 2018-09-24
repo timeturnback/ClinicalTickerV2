@@ -35,3 +35,15 @@ export function getChecklist(sheetname,successCB,errorCB)
 		if (error) errorCB(error);
 	})
 }
+
+export function getNextSheet(sheetname,successCB,errorCB)
+{
+	api.getNextSheet(sheetname, function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		if (error) errorCB(error);
+	})
+}
