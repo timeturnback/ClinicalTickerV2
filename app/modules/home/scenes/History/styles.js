@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import {theme} from "../../index"
-const {color, fontSize, fontFamily} = theme;
+const {color, fontSize, fontFamily, normalize, padding} = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -29,12 +29,48 @@ const styles = StyleSheet.create({
         flatListContainer:{
         	flex: 10,
         	justifyContent: 'center',
+            marginTop: 5
         },
         	flatlistPlaceholderText:{
                 fontSize: fontSize.large - 2,
                 fontFamily: fontFamily.regular,
                 textAlign: 'center',
         	},
+
+            wrapper:{
+            flex:1,
+            borderWidth:1,
+            borderRadius: 8,
+            padding : 10,
+            marginVertical: 5,
+            marginHorizontal: 10,
+
+            ...Platform.select({
+                ios: {
+                    shadowColor: 'rgba(0,0,0, .4)',
+                    shadowOffset: { height: 1, width: 1 },
+                    shadowOpacity: 1,
+                    shadowRadius: 1,
+                },
+                android: {
+                    elevation: 2,
+                },
+            }),
+        },
+                subjectText:{
+                    fontSize: normalize(19),
+                    lineHeight: normalize(21),
+                    color: color.white,
+                    fontFamily: fontFamily.medium,
+                },
+
+                tagText:{
+                    fontSize: normalize(16),
+                    lineHeight: normalize(21),
+                    color: color.white,
+                    fontFamily: fontFamily.medium,
+                },
+
         bottomContainer:{
             flex:0.8,
             flexDirection: 'row',

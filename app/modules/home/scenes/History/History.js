@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StatusBar, FlatList, TouchableOpacity} from 'react-native';
+import moment from 'moment';
 import {Actions} from 'react-native-router-flux';
 import {Icon} from 'react-native-elements';
 
@@ -15,15 +16,25 @@ class Home extends React.Component {
 
     renderItem({item, index})
     {
-        console.log(item);
+        const color = '#c4c4c4'
         return (
-            <Text> asdasd </Text>
+            <View style={[styles.wrapper, {backgroundColor: color, borderColor: color}]}>     
+                <Text style={styles.subjectText}>
+                    {item.SheetName}
+                </Text>
+                <Text style={styles.tagText}>
+                    {item.UserScore} / {item.TotalScore}
+                </Text>
+                <Text style={styles.tagText}>
+                    {moment(item.Date).fromNow()}
+                </Text>
+            </View>
             )
     }
 
     renderFlatList(historytabs)
     {
-        if (historytabs && (historytabs.lenght > 0))
+        if (historytabs && (historytabs.length > 0))
         {
             return(
                 <View style={styles.flatListContainer}>

@@ -59,3 +59,10 @@ export function getHistory(successCB,errorCB)
 		else if (error) errorCB(error);
 	})
 }
+
+export function saveResult(sheet,score,errorCB)
+{
+	api.saveResult(sheet,score,function(error){
+		if (error) errorCB(error);
+	})
+}

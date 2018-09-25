@@ -1,4 +1,5 @@
 import Expo , { SQLite, FileSystem, Asset } from 'expo';
+import moment from 'moment';
 import { AsyncStorage } from "react-native"
 import * as c from "../../config/constants";
 
@@ -24,12 +25,16 @@ export async function checkDatabase(callback)
 				} catch (error) {
 				 	alert(error.message);
 				}
-				const db = SQLite.openDatabase('dummie.db');
-				db.transaction(tx => tx.executeSql('',
+				const db = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
+				db.transaction(tx => tx.executeSql(`CREATE TABLE 'History' (
+						'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+						'SheetName'	TEXT NOT NULL,
+						'TotalScore'	INTEGER NOT NULL,
+						'UserScore'	INTEGER NOT NULL,
+						'Date'	TEXT NOT NULL
+					)`,
 					[],
-					(_,{rows})=>{console.log('success');},
-					(_,error)=>{downloadDatabase(callback);}
-					));
+					(_,{rows})=>{downloadDatabase(callback);}));
 	    		
 	    	}
 	   } catch (error) {
@@ -121,6 +126,23 @@ export function getHistory(callback)
 				(_,{rows}) => {
 					callback(true,rows._array,null);
 				},
+				(_,error)=>{
+					callback(false,null,error);
+				}),
+			null,
+			null
+			}
+		);
+}
+
+export function saveResult(sheet,score,callback)
+{
+	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
+	database.transaction(
+		tx => {
+        	tx.executeSql('insert into History (SheetName, TotalScore, UserScore, Date) values (?, ?, ?, ?)', 
+        		[sheet.title,score.totalscore,score.userscore,moment()],
+        		null,
 				(_,error)=>{
 					callback(false,null,error);
 				}),

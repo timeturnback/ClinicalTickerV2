@@ -7,7 +7,7 @@ import {actions as home, theme} from "../../index"
 
 import styles from "./styles"
 const {color, normalize} = theme;
-const {getNextSheet,getChecklist} = home;
+const {getNextSheet,getChecklist,saveResult} = home;
 
 class Result extends React.Component {
     constructor(props) {
@@ -22,6 +22,28 @@ class Result extends React.Component {
         this.renderNextSheetButton = this.renderNextSheetButton.bind(this);
         this.onNextPress = this.onNextPress.bind(this);
         this.gotoNextSheet = this.gotoNextSheet.bind(this);
+        this.onHome = this.onHome.bind(this);
+        this.saveResult = this.saveResult.bind(this);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const {score,tasklist} = nextProps;
+        let userscore = 0;
+        let totalscore = 0;
+        score.map((score,index)=>
+        {
+            userscore+=score;
+            if (tasklist[index].point1) totalscore+=tasklist[index].point1
+                else totalscore++;
+        });
+        return {userscore,totalscore};
+    }
+
+    saveResult()
+    {
+        const {sheet} = this.props;
+        const {userscore,totalscore} = this.state;
+        saveResult(sheet,{userscore,totalscore},(error)=>alert(error.message));
     }
 
     renderItem({item,index})
@@ -40,6 +62,7 @@ class Result extends React.Component {
     gotoNextSheet(data)
     {
         const {nextsheet} = this.state;
+        this.saveResult();
         Actions.Checklist({sheet: nextsheet,tasklist: data});
     }
 
@@ -78,6 +101,7 @@ class Result extends React.Component {
 
     onHome()
     {
+        this.saveResult();
         Actions.popTo('Home');
     }
 
@@ -113,24 +137,9 @@ class Result extends React.Component {
             }
     }
 
-    getDisplayScore(props)
-    {
-        const {score,tasklist} = props;
-        let userscore = 0;
-        let totalscore = 0;
-        score.map((score,index)=>
-        {
-            userscore+=score;
-            if (tasklist[index].point1) totalscore+=tasklist[index].point1
-                else totalscore++;
-        });
-        return {userscore,totalscore}
-    }
-
     render() {
         const {sheet, tasklist} = this.props;
         const title = sheet.title.toUpperCase();
-        const score = this.getDisplayScore(this.props);
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
@@ -142,10 +151,10 @@ class Result extends React.Component {
                     <Image style={styles.image} 
                         source={require('../../../../assets/png/score_circle.png')}/>
                     <Text style={styles.score}>
-                        {score.userscore}
+                        {this.state.userscore}
                     </Text>
                     <Text style={styles.totalPoint}>
-                        / {score.totalscore}
+                        / {this.state.totalscore}
                     </Text>
                 </View>
                 
