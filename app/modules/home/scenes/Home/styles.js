@@ -16,46 +16,62 @@ const styles = StyleSheet.create({
             justifyContent: 'flex-start',
         },
 
-            imageNoi:{
+            imageNoiView:{
                 left: scale(94),top: scale(153),
-                width: scale(114),height: scale(99),
                 position: 'absolute',
             },
-            imageNgoai:{
+                imageNoi:{
+                    width: scale(114),height: scale(99),
+                },
+            imageNgoaiView:{
                 left: scale(12),top: scale(104),
-                width: scale(108),height: scale(94),
                 position: 'absolute',
             },
-            imageSan:{
+                imageNgoai:{
+                    width: scale(108),height: scale(94),
+                },
+            imageSanView:{
                 left: scale(98),top: scale(254),
-                width: scale(92),height: scale(80),
                 position: 'absolute',
             },
-            imageNhi:{
+                imageSan:{
+                    width: scale(92),height: scale(80),
+                },
+            imageNhiView:{
                 left: scale(25),top: scale(213),
+                position: 'absolute',
+            },
+                imageNhi:{
                 width: scale(94),height: scale(80),
-                position: 'absolute',
-            },
-            imageNhiem:{
+                },
+            imageNhiemView:{
                 left: scale(186),top: scale(114),
-                width: scale(99),height: scale(86),
                 position: 'absolute',
             },
-            imageKyNang:{
+                imageNhiem:{
+                    width: scale(99),height: scale(86),
+                },
+            imageKyNangView:{
                 left: scale(256),top: scale(243),
-                width: scale(84),height: scale(73),
                 position: 'absolute',
             },
-            imageDieuDuong:{
+                imageKyNang:{
+                    width: scale(84),height: scale(73),
+                },
+            imageDieuDuongView:{
                 left: scale(190),top: scale(205),
-                width: scale(84),height: scale(73),
                 position: 'absolute',
             },
-            imageKhac:{
+                imageDieuDuong:{
+                    width: scale(84),height: scale(73),
+                },
+            imageKhacView:{
                 left: scale(190),top: scale(282),
-                width: scale(84),height: scale(73),
                 position: 'absolute',
             },
+                imageKhac:{
+                    width: scale(84),height: scale(73),
+                },
         bottomContainer:{
             flex:1,
         },
@@ -86,6 +102,7 @@ const styles = StyleSheet.create({
                         color: color.maincolor,
                         fontSize: fontSize.large,
                         fontFamily: fontFamily.regular,
+                        width: '100%'
                     },
 
     button:{

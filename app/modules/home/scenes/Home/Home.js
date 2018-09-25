@@ -104,30 +104,46 @@ class Home extends React.Component {
                 <ImageBackground style={styles.container} source={require('../../../../assets/png/home.png')}>
                     <StatusBar hidden={true} />
                     <View style={styles.categoryContainer}>
-                        <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
-                            <Image style={styles.imageNoi} source={require('../../../../assets/png/m_bt_noi.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
-                            <Image style={styles.imageSan} source={require('../../../../assets/png/m_bt_san.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
-                            <Image style={styles.imageKyNang} source={require('../../../../assets/png/m_bt_skill.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
-                            <Image style={styles.imageDieuDuong} source={require('../../../../assets/png/m_bt_dieuduong.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
-                            <Image style={styles.imageKhac} source={require('../../../../assets/png/m_bt_other.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.imageNgoai} source={require('../../../../assets/png/m_bt_ngoai.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.imageNhi} source={require('../../../../assets/png/m_bt_nhi.png')}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image style={styles.imageNhiem} source={require('../../../../assets/png/m_bt_nhiem.png')}/>
-                        </TouchableOpacity>
+                        <View style={styles.imageNoiView}>
+                            <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
+                                <Image style={styles.imageNoi}  source={require('../../../../assets/png/m_bt_noi.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageSanView}>
+                            <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
+                                <Image style={styles.imageSan} source={require('../../../../assets/png/m_bt_san.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageKyNangView}>
+                            <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
+                                <Image style={styles.imageKyNang} source={require('../../../../assets/png/m_bt_skill.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageDieuDuongView}>
+                            <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
+                                <Image style={styles.imageDieuDuong} source={require('../../../../assets/png/m_bt_dieuduong.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageKhacView}>
+                            <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
+                                <Image style={styles.imageKhac} source={require('../../../../assets/png/m_bt_other.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageNgoaiView}>
+                            <TouchableOpacity>
+                                <Image style={styles.imageNgoai} source={require('../../../../assets/png/m_bt_ngoai.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageNhiView}>
+                            <TouchableOpacity>
+                                <Image style={styles.imageNhi} source={require('../../../../assets/png/m_bt_nhi.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.imageNhiemView}>
+                            <TouchableOpacity>
+                                <Image style={styles.imageNhiem} source={require('../../../../assets/png/m_bt_nhiem.png')}/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={styles.bottomContainer}>
                         <TouchableOpacity style={styles.historyIcon} onPress={this.onHistoryBtPress}>
@@ -142,13 +158,13 @@ class Home extends React.Component {
                         </View>
                         <View style={styles.recentItems}>
                             <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(1)}>
-                                <Text style={styles.itemText}> {recentItem1.title} </Text>
+                                <Text numberOfLines={1} style={styles.itemText}> {recentItem1.title} </Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(2)}>
-                                <Text style={styles.itemText}> {recentItem2.title} </Text>
+                                <Text numberOfLines={1} style={styles.itemText}> {recentItem2.title} </Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(3)}>
-                                <Text style={styles.itemText}> {recentItem3.title} </Text>
+                                <Text numberOfLines={1} style={styles.itemText}> {recentItem3.title} </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
