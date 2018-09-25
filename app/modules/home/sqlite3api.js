@@ -29,6 +29,7 @@ export async function checkDatabase(callback)
 				db.transaction(tx => tx.executeSql(`CREATE TABLE 'History' (
 						'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 						'SheetName'	TEXT NOT NULL,
+						'TitleName' TEXT NOT NULL,
 						'TotalScore'	INTEGER NOT NULL,
 						'UserScore'	INTEGER NOT NULL,
 						'Date'	TEXT NOT NULL
@@ -95,7 +96,7 @@ export function getChecklist(sheetname, callback)
 		);
 }
 
-export function getNextSheet(sheetname, callback)
+export function getSheetBySheetName(sheetname, callback)
 {
 	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
 	database.transaction(
@@ -121,7 +122,26 @@ export function getHistory(callback)
 	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
-			tx.executeSql("select * from History limit 20",
+			tx.executeSql("select * from History order by Date DESC limit 20",
+				[],
+				(_,{rows}) => {
+					callback(true,rows._array,null);
+				},
+				(_,error)=>{
+					callback(false,null,error);
+				}),
+			null,
+			null
+			}
+		);
+}
+
+export function getRecentTab(callback)
+{
+	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
+	database.transaction(
+		tx => {
+			tx.executeSql("select * from History limit 3",
 				[],
 				(_,{rows}) => {
 					callback(true,rows._array,null);
@@ -140,8 +160,8 @@ export function saveResult(sheet,score,callback)
 	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
-        	tx.executeSql('insert into History (SheetName, TotalScore, UserScore, Date) values (?, ?, ?, ?)', 
-        		[sheet.title,score.totalscore,score.userscore,moment()],
+        	tx.executeSql('insert into History (SheetName, TitleName, TotalScore, UserScore, Date) values (?, ?, ?, ?, ?)', 
+        		[sheet.tablename,sheet.title,score.totalscore,score.userscore,moment().format('x')],
         		null,
 				(_,error)=>{
 					callback(false,null,error);

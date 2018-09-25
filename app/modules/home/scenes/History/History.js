@@ -20,13 +20,13 @@ class Home extends React.Component {
         return (
             <View style={[styles.wrapper, {backgroundColor: color, borderColor: color}]}>     
                 <Text style={styles.subjectText}>
-                    {item.SheetName}
+                    {item.TitleName}
                 </Text>
                 <Text style={styles.tagText}>
                     {item.UserScore} / {item.TotalScore}
                 </Text>
                 <Text style={styles.tagText}>
-                    {moment(item.Date).fromNow()}
+                    {moment(parseInt(item.Date)).fromNow()}
                 </Text>
             </View>
             )

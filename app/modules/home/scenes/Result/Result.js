@@ -7,7 +7,7 @@ import {actions as home, theme} from "../../index"
 
 import styles from "./styles"
 const {color, normalize} = theme;
-const {getNextSheet,getChecklist,saveResult} = home;
+const {getSheetBySheetName,getChecklist,saveResult} = home;
 
 class Result extends React.Component {
     constructor(props) {
@@ -17,8 +17,8 @@ class Result extends React.Component {
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
-        this.getNextSheet = this.getNextSheet.bind(this);
-        this.getNextSheetSuccess = this.getNextSheetSuccess.bind(this);
+        this.getSheetBySheetName = this.getSheetBySheetName.bind(this);
+        this.getSheetSuccess = this.getSheetSuccess.bind(this);
         this.renderNextSheetButton = this.renderNextSheetButton.bind(this);
         this.onNextPress = this.onNextPress.bind(this);
         this.gotoNextSheet = this.gotoNextSheet.bind(this);
@@ -68,17 +68,17 @@ class Result extends React.Component {
 
     componentDidMount()
     {
-        this.getNextSheet();
+        this.getSheetBySheetName();
     }
 
-    getNextSheet()
+    getSheetBySheetName()
     {
         const {sheet} = this.props;
         if (sheet.nextsheet == null) return
-            else getNextSheet(sheet.nextsheet,this.getNextSheetSuccess,(error)=>alert(error.message));
+            else getSheetBySheetName(sheet.nextsheet,this.getSheetSuccess,(error)=>alert(error.message));
     }
 
-    getNextSheetSuccess(data)
+    getSheetSuccess(data)
     {
         this.setState({
             nextsheet: data

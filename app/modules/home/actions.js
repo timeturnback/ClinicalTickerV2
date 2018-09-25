@@ -1,13 +1,17 @@
 import * as api from "./sqlite3api"
 import * as t from './actionTypes';
 
-export function checkDatabase()
+export function checkDatabase(successCB)
 {
 	return (dispatch) => {
 		dispatch({type: t.DATA_LOADING});
 		api.checkDatabase(function(success)
 			{
-				if (success) dispatch({type: t.DATA_AVAILABLE})
+				if (success) 
+					{
+						dispatch({type: t.DATA_AVAILABLE});
+						successCB();
+					}
 			});
 	};
 }
@@ -36,9 +40,9 @@ export function getChecklist(sheetname,successCB,errorCB)
 	})
 }
 
-export function getNextSheet(sheetname,successCB,errorCB)
+export function getSheetBySheetName(sheetname,successCB,errorCB)
 {
-	api.getNextSheet(sheetname, function(success,data,error)
+	api.getSheetBySheetName(sheetname, function(success,data,error)
 	{
 		if (success) 
 			{
@@ -64,5 +68,17 @@ export function saveResult(sheet,score,errorCB)
 {
 	api.saveResult(sheet,score,function(error){
 		if (error) errorCB(error);
+	})
+}
+
+export function getRecentTab(successCB,errorCB)
+{
+	api.getRecentTab(function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		else if (error) errorCB(error);
 	})
 }

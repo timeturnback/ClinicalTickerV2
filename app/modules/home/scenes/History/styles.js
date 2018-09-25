@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         flatListContainer:{
         	flex: 10,
         	justifyContent: 'center',
-            marginTop: 5
+            marginTop: 5,
+            width: '100%'
         },
         	flatlistPlaceholderText:{
                 fontSize: fontSize.large - 2,

@@ -9,19 +9,58 @@ import {actions as home, theme} from "../../index"
 import * as c from "../../constants"
 
 const {color} = theme;
-const {checkDatabase,getChecklists,getHistory} = home;
+const {checkDatabase,getChecklists,getHistory,getRecentTab,getSheetBySheetName,getChecklist} = home;
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            recentItem1:{
+                title: '',
+            },
+            recentItem2:{
+                title: '',
+            },
+            recentItem3:{
+                title: '',
+            }
+        };
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.setRecentItems = this.setRecentItems.bind(this);
+        this.getRecentTab = this.getRecentTab.bind(this);
+        this.getSheetSuccess = this.getSheetSuccess.bind(this);
+
         this.onCategoryPress = this.onCategoryPress.bind(this);
         this.onHistoryBtPress = this.onHistoryBtPress.bind(this);
+        this.onRecentItemPress = this.onRecentItemPress.bind(this);
     }
 
     componentDidMount()
     {
-        this.props.checkDatabase();
+        this.props.checkDatabase(this.getRecentTab);
+    }
+
+    getRecentTab()
+    {
+        getRecentTab(this.setRecentItems,(error)=>console.log(error.message));
+    }
+
+    setRecentItems(data)
+    {
+        let recentItem1 = {},recentItem2 = {},recentItem3 = {};
+
+        if (typeof data[0] !== 'undefined') getSheetBySheetName(data[0].SheetName,(data)=>this.getSheetSuccess('recentItem1',data),(error)=>alert(error.message));
+
+        if (typeof data[1] !== 'undefined') getSheetBySheetName(data[1].SheetName,(data)=>this.getSheetSuccess('recentItem2',data),(error)=>alert(error.message));
+
+        if (typeof data[2] !== 'undefined') getSheetBySheetName(data[2].SheetName,(data)=>this.getSheetSuccess('recentItem3',data),(error)=>alert(error.message));
+    }
+
+    getSheetSuccess(key, data)
+    {
+        const item ={};
+        item[key] = data;
+        this.setState({...item});
     }
 
     onCategoryPress(category)
@@ -37,6 +76,37 @@ class Home extends React.Component {
     onHistoryBtPress()
     {
         getHistory(this.gotoHistory,(error)=>this.gotoHistory(null));
+    }
+
+    onRecentItemPress(index)
+    {
+        switch (index)
+        {
+            case 1:
+            {
+                const {recentItem1} = this.state;
+                getChecklist(recentItem1.tablename,(data)=>this.gotoChecklist(recentItem1,data),(error) => alert(error.message));
+                break;
+            }
+            case 2:
+            {
+                const {recentItem2} = this.state;
+                getChecklist(recentItem2.tablename,(data)=>this.gotoChecklist(recentItem2,data),(error) => alert(error.message));
+                break;
+            }
+            case 3:
+            {
+                const {recentItem3} = this.state;
+                getChecklist(recentItem1.tablename,(data)=>this.gotoChecklist(recentItem3,data),(error) => alert(error.message));
+                break;
+            }
+        }
+
+    }
+
+    gotoChecklist(sheet,data)
+    {
+        Actions.Checklist({sheet: sheet,tasklist: data});
     }
 
     gotoHistory(data)
@@ -94,14 +164,14 @@ class Home extends React.Component {
                         <Text style={styles.titleText}> RECENT </Text>
                     </View>
                     <View style={styles.recentItems}>
-                        <TouchableOpacity style={styles.itemTO}>
-                            <Text style={styles.itemText}> Hỏi para sản khoa </Text>
+                        <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(1)}>
+                            <Text style={styles.itemText}> {this.state.recentItem1.title} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemTO}>
-                            <Text style={styles.itemText}> Bảng kiểm găng y tế </Text>
+                        <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(2)}>
+                            <Text style={styles.itemText}> {this.state.recentItem2.title} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemTO}>
-                            <Text style={styles.itemText}> Hỏi nội khoa </Text>
+                        <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(3)}>
+                            <Text style={styles.itemText}> {this.state.recentItem3.title} </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
