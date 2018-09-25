@@ -1,7 +1,7 @@
 import * as api from "./sqlite3api"
 import * as t from './actionTypes';
 
-export function checkDatabase(successCB)
+export function checkDatabase(errorCB)
 {
 	return (dispatch) => {
 		dispatch({type: t.DATA_LOADING});
@@ -10,8 +10,8 @@ export function checkDatabase(successCB)
 				if (success) 
 					{
 						dispatch({type: t.DATA_AVAILABLE});
-						successCB();
 					}
+				else if (error) errorCB(error);
 			});
 	};
 }
@@ -71,14 +71,28 @@ export function saveResult(sheet,score,errorCB)
 	})
 }
 
-export function getRecentTab(successCB,errorCB)
+export function getRecents(errorCB)
 {
-	api.getRecentTab(function(success,data,error)
-	{
-		if (success) 
-			{
-				successCB(data);
-			}
-		else if (error) errorCB(error);
-	})
+	return (dispatch) =>{
+		api.getRecents(function(success,index,data,error)
+		{
+			if (success) 
+				{	
+					console.log(index);
+					if (index == 0) getSheetBySheetName(data.SheetName,
+						(data2)=>
+						dispatch({type: t.RECENT_TAB1_AVAILABLE, data: data2}),
+						errorCB);
+					if (index == 1) getSheetBySheetName(data.SheetName,
+						(data2)=>
+						dispatch({type: t.RECENT_TAB2_AVAILABLE, data: data2}),
+						errorCB);
+					if (index == 2) getSheetBySheetName(data.SheetName,
+						(data2)=>
+						dispatch({type: t.RECENT_TAB3_AVAILABLE, data: data2}),
+						errorCB);
+				}
+			else if (error) errorCB(error);
+		})
+	}
 }

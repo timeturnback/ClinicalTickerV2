@@ -136,15 +136,18 @@ export function getHistory(callback)
 		);
 }
 
-export function getRecentTab(callback)
+export function getRecents(callback)
 {
 	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
-			tx.executeSql("select * from History limit 3",
+			tx.executeSql("select DISTINCT SheetName from History order by Date DESC limit 3",
 				[],
 				(_,{rows}) => {
-					callback(true,rows._array,null);
+					console.log(rows._array);
+					if (!(typeof rows._array[0] === 'undefined')) callback(true,0,rows._array[0],null);
+					if (!(typeof rows._array[1] === 'undefined'))  callback(true,1,rows._array[1],null);
+					if (!(typeof rows._array[2] === 'undefined'))  callback(true,2,rows._array[2],null);
 				},
 				(_,error)=>{
 					callback(false,null,error);
