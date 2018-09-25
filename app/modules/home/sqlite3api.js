@@ -1,29 +1,40 @@
 import Expo , { SQLite, FileSystem, Asset } from 'expo';
-import { database } from "../../config/sqlite3";
+import { AsyncStorage } from "react-native"
 import * as c from "../../config/constants";
 
-export function checkDatabase(callback)
-{
-	database.transaction(
-      	tx => {
-	        tx.executeSql('select Version from INFO', 
-	        	[], 
-	        	(_, { rows }) =>{
-	          		let versiondata = rows._array[0];
-	          		if (versiondata.Version !== c.APP_DATA_VERSION) 
-	          			{
-	        				console.log("wrong version download");
-	          				downloadDatabase(callback);
-	          			} else callback(true);
-	          		},
-	        	(_,error) => {
-	        		console.log("no database download");
-	        		downloadDatabase(callback);
-	        		});
-		    },
-		    null,
-		    null
-    );
+export async function checkDatabase(callback)
+{	
+	try {
+	    const value = await AsyncStorage.getItem('DATA_VERSION');
+	    if (value !== null) {
+	      if (value != c.APP_DATA_VERSION)
+	      {
+	      	console.log('wrong version download');
+	      	downloadDatabase(callback);
+	      } else 
+	      {
+	      	callback(true);
+	      }
+	    }
+	    else 
+	    	{
+	      		console.log('first time download');
+				try {
+				    await AsyncStorage.setItem('DATA_VERSION',c.APP_DATA_VERSION.toString());
+				} catch (error) {
+				 	alert(error.message);
+				}
+				const db = SQLite.openDatabase('dummie.db');
+				db.transaction(tx => tx.executeSql('',
+					[],
+					(_,{rows})=>{console.log('success');},
+					(_,error)=>{downloadDatabase(callback);}
+					));
+	    		
+	    	}
+	   } catch (error) {
+			alert(error.message);
+	   }
 }
 
 export function downloadDatabase(callback)
@@ -43,9 +54,10 @@ export function downloadDatabase(callback)
 
 export function getChecklists(category, callback)
 {
+	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
-			tx.executeSql("select * from LISTTABLE where category = '" + category + "'",
+			tx.executeSql("select * from LISTTABLE where category like '%" + category + "%'",
 				[],
 				(_,{rows}) => {
 					callback(true,rows._array,null);
@@ -61,6 +73,7 @@ export function getChecklists(category, callback)
 
 export function getChecklist(sheetname, callback)
 {
+	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
 			tx.executeSql("select * from " + sheetname,
@@ -79,12 +92,34 @@ export function getChecklist(sheetname, callback)
 
 export function getNextSheet(sheetname, callback)
 {
+	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
 			tx.executeSql("select * from LISTTABLE where tablename = '" + sheetname + "'",
 				[],
 				(_,{rows}) => {
 					callback(true,rows._array[0],null);
+				},
+				(_,error)=>{
+					callback(false,null,error);
+				}),
+			null,
+			null
+			}
+		);
+}
+
+
+
+export function getHistory(callback)
+{
+	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
+	database.transaction(
+		tx => {
+			tx.executeSql("select * from History limit 20",
+				[],
+				(_,{rows}) => {
+					callback(true,rows._array,null);
 				},
 				(_,error)=>{
 					callback(false,null,error);

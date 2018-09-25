@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import {theme} from "../../index"
-const {color, fontFamily, fontSize} = theme;
+const {color, fontSize, fontFamily} = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -9,10 +9,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: color.white
-    },
+    }, 
 
-        titleContainer:
-        {
+    	titleContainer:{
             flex: 0.8,
             backgroundColor: color.maincolor,
             alignItems: 'center',
@@ -29,8 +28,13 @@ const styles = StyleSheet.create({
 
         flatListContainer:{
         	flex: 10,
+        	justifyContent: 'center',
         },
-
+        	flatlistPlaceholderText:{
+                fontSize: fontSize.large - 2,
+                fontFamily: fontFamily.regular,
+                textAlign: 'center',
+        	},
         bottomContainer:{
             flex:0.8,
             flexDirection: 'row',
@@ -39,15 +43,7 @@ const styles = StyleSheet.create({
             paddingHorizontal : 20,
             justifyContent: 'space-between',
         },
-            buttonText:{
-                fontSize: fontSize.large,
-                fontFamily: fontFamily.bold
-            },
-    activityIndicator:{
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: "center"
-    },
+
 });
 
 

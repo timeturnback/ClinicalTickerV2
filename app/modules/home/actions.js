@@ -12,16 +12,16 @@ export function checkDatabase()
 	};
 }
 
-export function getChecklists(category,errorCB)
+export function getChecklists(category,successCB,errorCB)
 {
-	return (dispatch) => {
-		dispatch({type: t.CHECKLISTS_LOADING});
-		api.getChecklists(category, function(success,data,error)
+	api.getChecklists(category, function(success,data,error)
 		{
-			if (success) dispatch({type: t.CHECKLISTS_AVAILABLE, data: data});
+			if (success) 
+				{
+					successCB(data);
+				}
 			if (error) errorCB(error);
 		})
-	}
 }
 
 export function getChecklist(sheetname,successCB,errorCB)
@@ -45,5 +45,17 @@ export function getNextSheet(sheetname,successCB,errorCB)
 				successCB(data);
 			}
 		if (error) errorCB(error);
+	})
+}
+
+export function getHistory(successCB,errorCB)
+{
+	api.getHistory(function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		else if (error) errorCB(error);
 	})
 }

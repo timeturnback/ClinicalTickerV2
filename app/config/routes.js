@@ -6,6 +6,7 @@ import Home from '../modules/home/scenes/Home';
 import ChecklistBoard from '../modules/home/scenes/ChecklistBoard';
 import Checklist from '../modules/home/scenes/Checklist';
 import Result from '../modules/home/scenes/Result';
+import History from '../modules/home/scenes/History';
 
 //support component
 import NavButton from '../components/NavButton';
@@ -19,15 +20,6 @@ import {color, navTitleStyle} from "../styles/theme";
 export default class extends React.Component {
   constructor() {
     super();
-  }
-
-  renderCloseButton(props) {
-    return (
-      <NavButton onPress={Actions.pop}
-        name={"md-close"}
-        type={"ionicon"}
-        color={color.black}/>
-      )
   }
 
   render() {
@@ -45,20 +37,22 @@ export default class extends React.Component {
                 initial={true} 
                 type={ActionConst.REPLACE}/>
               <Scene key="ChecklistBoard"
-                component={ChecklistBoard} title="Danh sách bảng kiểm"
+                component={ChecklistBoard} 
+                hideNavBar={true}
                 navigationBarStyle={{backgroundColor: "#fff"}}
-                titleStyle={navTitleStyle}
-                renderLeftButton={this.renderCloseButton}/>
+                titleStyle={navTitleStyle}/>
               <Scene key="Checklist"
                 component={Checklist}
                 hideNavBar={true}
-                titleStyle={navTitleStyle}
-                renderLeftButton={this.renderCloseButton}/>
+                titleStyle={navTitleStyle}/>
               <Scene key="Result"
                 component={Result}
                 hideNavBar={true}
-                titleStyle={navTitleStyle}
-                renderLeftButton={this.renderCloseButton}/>
+                titleStyle={navTitleStyle}/>
+              <Scene key="History"
+                component={History}
+                hideNavBar={true}
+                titleStyle={navTitleStyle}/>
             </Stack>
           </Scene>
         </Modal>
