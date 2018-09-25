@@ -9,13 +9,14 @@ import {actions as home, theme} from "../../index"
 import * as c from "../../constants"
 
 const {color} = theme;
-const {checkDatabase,getChecklists} = home;
+const {checkDatabase,getChecklists,getHistory} = home;
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.onCategoryPress = this.onCategoryPress.bind(this);
+        this.onHistoryBtPress = this.onHistoryBtPress.bind(this);
     }
 
     componentDidMount()
@@ -31,6 +32,16 @@ class Home extends React.Component {
     onSuccess(data)
     {
         Actions.ChecklistBoard({checklists: data});
+    }
+
+    onHistoryBtPress()
+    {
+        getHistory(this.gotoHistory,(error)=>this.gotoHistory(null));
+    }
+
+    gotoHistory(data)
+    {
+        Actions.History({historytabs: data});
     }
 
     render() {
@@ -72,7 +83,7 @@ class Home extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.bottomContainer}>
-                    <TouchableOpacity style={styles.historyIcon}>
+                    <TouchableOpacity style={styles.historyIcon} onPress={this.onHistoryBtPress}>
                         <FontAwesome 
                             raised
                             name='history'

@@ -47,3 +47,15 @@ export function getNextSheet(sheetname,successCB,errorCB)
 		if (error) errorCB(error);
 	})
 }
+
+export function getHistory(successCB,errorCB)
+{
+	api.getHistory(function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		else if (error) errorCB(error);
+	})
+}

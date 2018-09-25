@@ -108,3 +108,24 @@ export function getNextSheet(sheetname, callback)
 			}
 		);
 }
+
+
+
+export function getHistory(callback)
+{
+	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
+	database.transaction(
+		tx => {
+			tx.executeSql("select * from History limit 20",
+				[],
+				(_,{rows}) => {
+					callback(true,rows._array,null);
+				},
+				(_,error)=>{
+					callback(false,null,error);
+				}),
+			null,
+			null
+			}
+		);
+}
