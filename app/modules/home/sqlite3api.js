@@ -5,6 +5,15 @@ import * as c from "../../config/constants";
 
 export async function checkDatabase(callback)
 {	
+	const db = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
+		db.transaction(tx => tx.executeSql(`CREATE TABLE 'History' (
+				'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+				'SheetName'	TEXT NOT NULL,
+				'TitleName' TEXT NOT NULL,
+				'TotalScore'	INTEGER NOT NULL,
+				'UserScore'	INTEGER NOT NULL,
+				'Date'	TEXT NOT NULL
+			)`));
 	try {
 	    const value = await AsyncStorage.getItem('DATA_VERSION');
 	    if (value !== null) {
@@ -25,17 +34,10 @@ export async function checkDatabase(callback)
 				} catch (error) {
 				 	alert(error.message);
 				}
-				const db = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
-				db.transaction(tx => tx.executeSql(`CREATE TABLE 'History' (
-						'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-						'SheetName'	TEXT NOT NULL,
-						'TitleName' TEXT NOT NULL,
-						'TotalScore'	INTEGER NOT NULL,
-						'UserScore'	INTEGER NOT NULL,
-						'Date'	TEXT NOT NULL
-					)`,
+				db.transaction(tx => tx.executeSql('',
 					[],
-					(_,{rows})=>{downloadDatabase(callback);}));
+					null,
+					(_,error)=>{downloadDatabase(callback);}));
 	    		
 	    	}
 	   } catch (error) {

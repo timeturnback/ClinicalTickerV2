@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ClinicalTickerV2",
-    "description": "This project is really great.",
+    "description": "Clinical Ticker by Dr Van Hai Long",
     "slug": "ClinicalTickerV2",
     "privacy": "unlisted",
     "sdkVersion": "30.0.0",

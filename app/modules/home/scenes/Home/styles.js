@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
             flex:1,
         },
             historyIcon:{
-                flex:1.2,
+                flex:1.4,
                 width: '10%',
                 marginLeft: 10,
                 marginBottom: 5
