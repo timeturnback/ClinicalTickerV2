@@ -15,10 +15,35 @@ export function checkDatabase()
 export function getChecklists(category,errorCB)
 {
 	return (dispatch) => {
+		dispatch({type: t.CHECKLISTS_LOADING});
 		api.getChecklists(category, function(success,data,error)
 		{
 			if (success) dispatch({type: t.CHECKLISTS_AVAILABLE, data: data});
 			if (error) errorCB(error);
 		})
 	}
+}
+
+export function getChecklist(sheetname,successCB,errorCB)
+{
+	api.getChecklist(sheetname, function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		if (error) errorCB(error);
+	})
+}
+
+export function getNextSheet(sheetname,successCB,errorCB)
+{
+	api.getNextSheet(sheetname, function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		if (error) errorCB(error);
+	})
 }

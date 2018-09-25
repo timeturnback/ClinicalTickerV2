@@ -3,6 +3,8 @@ import {View, Text, FlatList, ActivityIndicator} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 
+import SheetItem from '../../components/SheetItem'
+
 import styles from "./styles"
 import {theme} from "../../index"
 
@@ -15,8 +17,10 @@ class ChecklistBoard extends React.Component {
 
     renderItem({item, index})
     {
+        let color = '#acacac';
+        if (index % 2 == 0) color = '#fff';
         return (
-            <Text> {item.title} </Text>
+            <SheetItem item={item}/>
             )
     }
 
