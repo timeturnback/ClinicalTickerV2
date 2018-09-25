@@ -1,0 +1,7 @@
+export const CATEGORY_NOI = "noi"
+export const CATEGORY_NGOAI = "ngoai"
+export const CATEGORY_SAN = "san"
+export const CATEGORY_NHI = "nhi"
+export const CATEGORY_NHIEM = "nhiem"
+export const CATEGORY_DIEUDUONG = "dieuduong"
+export const CATEGORY_KHAC = "khac"

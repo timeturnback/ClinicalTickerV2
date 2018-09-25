@@ -23,7 +23,8 @@ export default class App extends Component {
             {RobotoBold: require('./app/assets/fonts/Roboto-Bold.ttf')},
             {RobotoMedium: require('./app/assets/fonts/Roboto-Medium.ttf')},
             {RobotoRegular: require('./app/assets/fonts/Roboto-Regular.ttf')},
-            {RobotoLight: require('./app/assets/fonts/Roboto-Light.ttf')}
+            {RobotoLight: require('./app/assets/fonts/Roboto-Light.ttf')},
+            {Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf')}
         ]);
 
         await Promise.all([...fontAssets]);

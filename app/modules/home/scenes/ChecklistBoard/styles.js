@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import {theme} from "../../index"
-const {color, normalize, fontSize, fontFamily} = theme;
+const {color} = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -10,22 +10,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: color.white
     },
-
-    button:{
-    	justifyContent: 'center',
-        height: normalize(55),
-        width: normalize(200),
-        marginVertical: 10,
-        borderRadius: 7
-        },
-
-    buttonText:{
-    	textAlign: 'center',
-    	color: color.white,
-        fontSize: fontSize.regular + 5,
-        fontFamily: fontFamily.bold,
+    flatList:{
+    	flex: 1,
     },
-
     activityIndicator:{
         flex: 1,
         backgroundColor: '#fff',
