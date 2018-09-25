@@ -49,8 +49,8 @@ class ChecklistBoard extends React.Component {
                             name='ios-arrow-back'
                             type='ionicon'
                             color={color.black}
-                            iconStyle={{height:normalize(40)}}
-                            size={normalize(40)}
+                            iconStyle={{height:normalize(50)}}
+                            size={normalize(50)}
                             />
                     </TouchableOpacity>
                 </View>

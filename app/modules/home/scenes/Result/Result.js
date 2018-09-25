@@ -29,13 +29,14 @@ class Result extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const {score,tasklist} = nextProps;
-        let userscore = 0;
-        let totalscore = 0;
+        let userscore = 0.0;
+        let totalscore = 0.0;
         score.map((score,index)=>
         {
-            userscore+=score;
-            if (tasklist[index].point1) totalscore+=tasklist[index].point1
-                else totalscore++;
+            let point = 1;
+            if (tasklist[index].point1) point = tasklist[index].point1;
+            totalscore+=point;
+            userscore = userscore + (score * point);
         });
         return {userscore,totalscore};
     }
@@ -117,7 +118,9 @@ class Result extends React.Component {
         {
             return (
                 <View style={styles.thirdContainer}>
-                    <Text style={styles.flatListText}> Đã hoàn thành tất cả các task </Text>
+                    <View style={styles.flatListContainer}>
+                        <Text style={styles.flatListText}> Đã hoàn thành tất cả các task </Text>
+                    </View>
                     {this.renderNextSheetButton()}
                 </View>
                 )
@@ -126,12 +129,14 @@ class Result extends React.Component {
             return (
                 <View style={styles.thirdContainer}>
                     <Text style={styles.unfinishText}> Undone : {unfinishtasks.length} </Text>
-                    <FlatList
-                        style={styles.flatList}
-                        data={unfinishtasks}
-                        renderItem={this.renderItem}
-                        initialNumToRender={8}
-                        keyExtractor={(item, index) => index.toString()}/>
+                    <View style={styles.flatListContainer}>
+                        <FlatList
+                            style={styles.flatList}
+                            data={unfinishtasks}
+                            renderItem={this.renderItem}
+                            initialNumToRender={8}
+                            keyExtractor={(item, index) => index.toString()}/>
+                    </View>
                     {this.renderNextSheetButton()}
                 </View>
                 )

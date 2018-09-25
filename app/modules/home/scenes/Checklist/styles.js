@@ -19,12 +19,13 @@ const styles = StyleSheet.create({
             	flex: 1,
             },
         bottomContainer:{
-            flex:1,
+            flex:0.8,
             flexDirection: 'row',
             alignItems: 'center',
             width: '100%',
             paddingHorizontal : 20,
             justifyContent: 'space-between',
+            marginBottom: 5,
         },
             buttonText:{
                 fontSize: fontSize.large,

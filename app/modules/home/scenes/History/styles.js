@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
             width: '100%',
             paddingHorizontal : 20,
             justifyContent: 'space-between',
+            marginBottom: 5,
         },
 
 });

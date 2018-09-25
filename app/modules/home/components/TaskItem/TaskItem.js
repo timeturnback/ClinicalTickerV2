@@ -21,25 +21,36 @@ class TaskItem extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
+        let imageurl = require('../../../../assets/png/check_green_bg.png');
+        if (nextProps.type != 1) imageurl = require('../../../../assets/png/check_red.png');
         return {
-            iconsource: require('../../../../assets/png/check_green_bg.png'),
+            iconsource: imageurl,
             iconstate: 0
         };
     }
     
     onPress()
     {
+        const {type} = this.props;
         let iconstate = this.state.iconstate;
-        iconstate = (iconstate + 1) % 2;
-        iconsource = require('../../../../assets/png/check_green_bg.png'); //default
+        if (type == 1) iconstate = (iconstate + 1) % 2;
+        else iconstate = (iconstate + 1) % 3;
+        let iconsource = require('../../../../assets/png/check_green_bg.png'); //default
+        if (type != 1) iconsource = require('../../../../assets/png/check_red.png');
         switch (iconstate)
         {
             case 0:{
-                iconsource = require('../../../../assets/png/check_green_bg.png');
+                if (type == 1) iconsource = require('../../../../assets/png/check_green_bg.png');
+                else iconsource = require('../../../../assets/png/check_red.png');
                 break;
             }
             case 1:{
-                iconsource = require('../../../../assets/png/check_green.png');
+                if (type == 1) iconsource = require('../../../../assets/png/check_green.png');
+                else iconsource = require('../../../../assets/png/check_yellow.png');
+                break;
+            }
+            case 2:{
+                if (type != 1) iconsource = require('../../../../assets/png/check_green.png');
                 break;
             }
         }
