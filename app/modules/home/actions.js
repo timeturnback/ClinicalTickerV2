@@ -64,10 +64,11 @@ export function getHistory(successCB,errorCB)
 	})
 }
 
-export function saveResult(sheet,score,errorCB)
+export function saveResult(sheet,score,successCB,errorCB)
 {
-	api.saveResult(sheet,score,function(error){
-		if (error) errorCB(error);
+	api.saveResult(sheet,score,function(success,error){
+		if (success) successCB()
+		else if (error) errorCB(error);
 	})
 }
 
@@ -78,7 +79,6 @@ export function getRecents(errorCB)
 		{
 			if (success) 
 				{	
-					console.log(index);
 					if (index == 0) getSheetBySheetName(data.SheetName,
 						(data2)=>
 						dispatch({type: t.RECENT_TAB1_AVAILABLE, data: data2}),

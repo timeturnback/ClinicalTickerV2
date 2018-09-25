@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, FlatList, Image} from 'react-native';
+import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
 
@@ -7,7 +8,7 @@ import {actions as home, theme} from "../../index"
 
 import styles from "./styles"
 const {color, normalize} = theme;
-const {getSheetBySheetName,getChecklist,saveResult} = home;
+const {getSheetBySheetName,getChecklist,saveResult,getRecents} = home;
 
 class Result extends React.Component {
     constructor(props) {
@@ -43,7 +44,7 @@ class Result extends React.Component {
     {
         const {sheet} = this.props;
         const {userscore,totalscore} = this.state;
-        saveResult(sheet,{userscore,totalscore},(error)=>alert(error.message));
+        saveResult(sheet,{userscore,totalscore},()=>this.props.getRecents((error)=>alert(error.message)),(error)=>alert(error.message));
     }
 
     renderItem({item,index})
@@ -178,4 +179,4 @@ class Result extends React.Component {
             )
     }
 }
-export default Result;
+export default connect(null,{getRecents})(Result);
