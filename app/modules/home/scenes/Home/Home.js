@@ -9,120 +9,177 @@ import {actions as home, theme} from "../../index"
 import * as c from "../../constants"
 
 const {color} = theme;
-const {checkDatabase,getChecklists,getHistory} = home;
+const {checkDatabase,getChecklists,getHistory,getRecents,getChecklist} = home;
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.onCategoryPress = this.onCategoryPress.bind(this);
-        this.onHistoryBtPress = this.onHistoryBtPress.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      recentItem1:{
+        title: '',
+      },
+      recentItem2:{
+        title: '',
+      },
+      recentItem3:{
+        title: '',
+      }
+    }
+  }
+
+  componentDidMount = () => {
+    this.props.checkDatabase((error)=>alert(error.message));
+    this.props.getRecents((error)=>alert(error.message));
+  }
+
+  onCategoryPress = (category) => {
+    getChecklists(category,this.onCPSuccess,(error) => {alert(error.message)});
+  }
+
+  onCPSuccess = (data) => {
+    Actions.ChecklistBoard({checklists: data});
+  }
+
+  onHistoryBtPress = () => {
+    getHistory(this.gotoHistory,(error)=>this.gotoHistory(null));
+  }
+
+  onRecentItemPress = (index) => {
+    switch (index) {
+      case 1: {
+        const {recentItem1} = this.props;
+        getChecklist(recentItem1.tablename,(data)=>this.gotoChecklist(recentItem1,data),(error) => alert(error.message));
+        break;
+      }
+      case 2: {
+        const {recentItem2} = this.props;
+        getChecklist(recentItem2.tablename,(data)=>this.gotoChecklist(recentItem2,data),(error) => alert(error.message));
+        break;
+      }
+      case 3: {
+        const {recentItem3} = this.props;
+        getChecklist(recentItem3.tablename,(data)=>this.gotoChecklist(recentItem3,data),(error) => alert(error.message));
+        break;
+      }
     }
 
-    componentDidMount()
-    {
-        this.props.checkDatabase();
-    }
+  }
 
-    onCategoryPress(category)
-    {
-        getChecklists(category,this.onSuccess,(error) => {alert(error.message)});
-    }
+  gotoChecklist = (sheet,data) => {
+    Actions.Checklist({sheet: sheet,tasklist: data});
+  }
 
-    onSuccess(data)
-    {
-        Actions.ChecklistBoard({checklists: data});
-    }
+  gotoHistory = (data) => {
+    Actions.History({historytabs: data});
+  }
 
-    onHistoryBtPress()
-    {
-        getHistory(this.gotoHistory,(error)=>this.gotoHistory(null));
-    }
-
-    gotoHistory(data)
-    {
-        Actions.History({historytabs: data});
-    }
-
-    render() {
-        if (this.props.isDataLoading){
-            return(
-                <View style={styles.activityIndicator}>
-                    <ActivityIndicator animating={true} />
-                </View>
-            )}
-        else if (this.props.isDataAvailable)
-        {
-        return (
-            <ImageBackground style={styles.container} source={require('../../../../assets/png/home.png')}>
-                <StatusBar hidden={true} />
-                <View style={styles.categoryContainer}>
-                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
-                        <Image style={styles.imageNoi} source={require('../../../../assets/png/m_bt_noi.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
-                        <Image style={styles.imageSan} source={require('../../../../assets/png/m_bt_san.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
-                        <Image style={styles.imageKyNang} source={require('../../../../assets/png/m_bt_skill.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
-                        <Image style={styles.imageDieuDuong} source={require('../../../../assets/png/m_bt_dieuduong.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
-                        <Image style={styles.imageKhac} source={require('../../../../assets/png/m_bt_other.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image style={styles.imageNgoai} source={require('../../../../assets/png/m_bt_ngoai.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image style={styles.imageNhi} source={require('../../../../assets/png/m_bt_nhi.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image style={styles.imageNhiem} source={require('../../../../assets/png/m_bt_nhiem.png')}/>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.bottomContainer}>
-                    <TouchableOpacity style={styles.historyIcon} onPress={this.onHistoryBtPress}>
-                        <FontAwesome 
-                            raised
-                            name='history'
-                            color='#353535'
-                            size={35} />
-                    </TouchableOpacity>
-                    <View style={styles.recentTitle}>
-                        <Text style={styles.titleText}> RECENT </Text>
-                    </View>
-                    <View style={styles.recentItems}>
-                        <TouchableOpacity style={styles.itemTO}>
-                            <Text style={styles.itemText}> Hỏi para sản khoa </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemTO}>
-                            <Text style={styles.itemText}> Bảng kiểm găng y tế </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemTO}>
-                            <Text style={styles.itemText}> Hỏi nội khoa </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ImageBackground>
-            )
-        }
-        else {
-            return(
-            <View style={styles.container}>
-                <Text> Error ! Can't load data </Text>
+  render() {
+    if (this.props.isDataLoading) {
+      return(
+        <View style={styles.activityIndicator}>
+          <ActivityIndicator animating={true} />
+          </View>
+          )
+    } else if (this.props.isDataAvailable) {
+      const {recentItem1 = {},recentItem2 = {}, recentItem3 = {}} = this.props;
+      return (
+        <ImageBackground style={styles.container} source={require('../../../../assets/png/home.png')}>
+          <StatusBar hidden={true} />
+          <View style={styles.categoryContainer}>
+            <View style={styles.imageNoiView}>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NOI)}>
+                <Image style={styles.imageNoi}  source={require('../../../../assets/png/m_bt_noi.png')}/>
+              </TouchableOpacity>
             </View>
+            <View style={styles.imageSanView}>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_SAN)}>
+                <Image style={styles.imageSan} source={require('../../../../assets/png/m_bt_san.png')}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imageKyNangView}>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KYNANG)}>
+                <Image style={styles.imageKyNang} source={require('../../../../assets/png/m_bt_skill.png')}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imageDieuDuongView}>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_DIEUDUONG)}>
+                <Image style={styles.imageDieuDuong} source={require('../../../../assets/png/m_bt_dieuduong.png')}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imageKhacView}>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_KSNK)}>
+                <Image style={styles.imageKhac} source={require('../../../../assets/png/m_bt_other.png')}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imageNgoaiView}>
+              <TouchableOpacity>
+                <Image style={styles.imageNgoai} source={require('../../../../assets/png/m_bt_ngoai.png')}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imageNhiView}>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NHI)}>
+                <Image style={styles.imageNhi} source={require('../../../../assets/png/m_bt_nhi.png')}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imageNhiemView}>
+              <TouchableOpacity>
+                <Image style={styles.imageNhiem} source={require('../../../../assets/png/m_bt_nhiem.png')}/>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.bottomContainer}>
+            <View style={styles.iconContainer}>
+              <FontAwesome 
+                raised
+                name='history'
+                color='#353535'
+                size={40}
+                onPress={this.onHistoryBtPress}
+               />
+               <FontAwesome 
+                raised
+                name='search'
+                color='#353535'
+                size={40}
+                onPress={Actions.Search}
+               />
+            </View>
+            <View style={styles.recentTitle}>
+              <Text style={styles.titleText}> RECENT </Text>
+            </View>
+            <View style={styles.recentItems}>
+              <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(1)}>
+                <Text numberOfLines={1} style={styles.itemText}> {recentItem1.title} </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(2)}>
+                <Text numberOfLines={1} style={styles.itemText}> {recentItem2.title} </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(3)}>
+                <Text numberOfLines={1} style={styles.itemText}> {recentItem3.title} </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
             )
-        }
     }
+    else {
+      return(
+        <View style={styles.container}>
+          <Text> Error ! Can't load data </Text>
+          </View>
+          )
+    }
+  }
 }
 
 function mapStateToProps(state, props) {
-    return {
-        isDataLoading: state.homeReducer.isDataLoading,
-        isDataAvailable: state.homeReducer.isDataAvailable,
-    }
+  return {
+    isDataLoading: state.homeReducer.isDataLoading,
+    isDataAvailable: state.homeReducer.isDataAvailable,
+    recentItem1: state.homeReducer.recentItem1,
+    recentItem2: state.homeReducer.recentItem2,
+    recentItem3: state.homeReducer.recentItem3,
+  }
 }
 
-export default connect(mapStateToProps,{checkDatabase})(Home);
+export default connect(mapStateToProps,{checkDatabase,getRecents})(Home);

@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "ClinicalTickerV2",
-    "description": "This project is really great.",
+    "version": "1.0.2",
+    "description": "Clinical Ticker by Dr Van Hai Long",
     "slug": "ClinicalTickerV2",
     "privacy": "unlisted",
     "sdkVersion": "30.0.0",
@@ -9,7 +10,13 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "ebitvn.medical.clinicaltickerv2"
+    },
+    "android": {
+      "package": "ebitvn.medical.clinicaltickerv2"
+    },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,9 +30,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "packagerOpts": {
       "assetExts": [
         "db"

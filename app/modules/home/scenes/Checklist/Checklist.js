@@ -42,7 +42,8 @@ class Checklist extends React.Component {
     onItemChange(index, iconstate)
     {
         let {score = []} = this.state;
-        score[index] = iconstate;
+        if (this.props.sheet.type == 1) score[index] = iconstate;
+        else score[index] = iconstate * 0.5;
         this.setState({
             score: score,
         });
@@ -51,9 +52,10 @@ class Checklist extends React.Component {
     renderItem({item,index})
     {
         let color = '#acacac';
+        const {type} = this.props.sheet;
         if (index % 2 == 0) color = '#fff';
         return (
-            <TaskItem item={item} index={index} callback={this.onItemChange}/>
+            <TaskItem item={item} type={type} index={index} callback={this.onItemChange}/>
             )
     }
 

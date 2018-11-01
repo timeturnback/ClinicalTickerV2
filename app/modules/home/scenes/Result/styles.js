@@ -52,11 +52,15 @@ const styles = StyleSheet.create({
     		flex: 8,
     	},
             unfinishText:{
+                flex:1,
                 marginLeft: 10,
                 fontSize: fontSize.large - 3,
                 fontFamily: fontFamily.bold,
             },
-
+            flatListContainer:{
+                flex:8,
+                justifyContent:'center'
+            },
                 flatList:{
                     backgroundColor: '#e2e2e2',
                 },
@@ -68,10 +72,12 @@ const styles = StyleSheet.create({
                     marginHorizontal: 10,
                 },
             flatListText:{
+                flex:4,
                 fontSize: fontSize.large - 3,
                 fontFamily: fontFamily.regular,
                 },
             nextSheetButton:{
+                flex:2,
                 marginTop: 10,
                 marginLeft: 10
             },
@@ -83,6 +89,7 @@ const styles = StyleSheet.create({
             width: '100%',
             paddingHorizontal : 20,
             justifyContent: 'space-between',
+            marginBottom: 5,
         },
             buttonText:{
                 fontSize: fontSize.large,

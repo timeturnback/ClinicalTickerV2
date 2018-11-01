@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, FlatList, Image} from 'react-native';
+import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
 
@@ -7,7 +8,7 @@ import {actions as home, theme} from "../../index"
 
 import styles from "./styles"
 const {color, normalize} = theme;
-const {getNextSheet,getChecklist} = home;
+const {getSheetBySheetName,getChecklist,saveResult,getRecents} = home;
 
 class Result extends React.Component {
     constructor(props) {
@@ -17,11 +18,34 @@ class Result extends React.Component {
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
-        this.getNextSheet = this.getNextSheet.bind(this);
-        this.getNextSheetSuccess = this.getNextSheetSuccess.bind(this);
+        this.getSheetBySheetName = this.getSheetBySheetName.bind(this);
+        this.getSheetSuccess = this.getSheetSuccess.bind(this);
         this.renderNextSheetButton = this.renderNextSheetButton.bind(this);
         this.onNextPress = this.onNextPress.bind(this);
         this.gotoNextSheet = this.gotoNextSheet.bind(this);
+        this.onHome = this.onHome.bind(this);
+        this.saveResult = this.saveResult.bind(this);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const {score,tasklist} = nextProps;
+        let userscore = 0.0;
+        let totalscore = 0.0;
+        score.map((score,index)=>
+        {
+            let point = 1;
+            if (tasklist[index].point1) point = tasklist[index].point1;
+            totalscore+=point;
+            userscore = userscore + (score * point);
+        });
+        return {userscore,totalscore};
+    }
+
+    saveResult()
+    {
+        const {sheet} = this.props;
+        const {userscore,totalscore} = this.state;
+        saveResult(sheet,{userscore,totalscore},()=>this.props.getRecents((error)=>alert(error.message)),(error)=>alert(error.message));
     }
 
     renderItem({item,index})
@@ -40,22 +64,23 @@ class Result extends React.Component {
     gotoNextSheet(data)
     {
         const {nextsheet} = this.state;
+        this.saveResult();
         Actions.Checklist({sheet: nextsheet,tasklist: data});
     }
 
     componentDidMount()
     {
-        this.getNextSheet();
+        this.getSheetBySheetName();
     }
 
-    getNextSheet()
+    getSheetBySheetName()
     {
         const {sheet} = this.props;
         if (sheet.nextsheet == null) return
-            else getNextSheet(sheet.nextsheet,this.getNextSheetSuccess,(error)=>alert(error.message));
+            else getSheetBySheetName(sheet.nextsheet,this.getSheetSuccess,(error)=>alert(error.message));
     }
 
-    getNextSheetSuccess(data)
+    getSheetSuccess(data)
     {
         this.setState({
             nextsheet: data
@@ -78,6 +103,7 @@ class Result extends React.Component {
 
     onHome()
     {
+        this.saveResult();
         Actions.popTo('Home');
     }
 
@@ -92,7 +118,9 @@ class Result extends React.Component {
         {
             return (
                 <View style={styles.thirdContainer}>
-                    <Text style={styles.flatListText}> Đã hoàn thành tất cả các task </Text>
+                    <View style={styles.flatListContainer}>
+                        <Text style={styles.flatListText}> Đã hoàn thành tất cả các task </Text>
+                    </View>
                     {this.renderNextSheetButton()}
                 </View>
                 )
@@ -101,36 +129,23 @@ class Result extends React.Component {
             return (
                 <View style={styles.thirdContainer}>
                     <Text style={styles.unfinishText}> Undone : {unfinishtasks.length} </Text>
-                    <FlatList
-                        style={styles.flatList}
-                        data={unfinishtasks}
-                        renderItem={this.renderItem}
-                        initialNumToRender={8}
-                        keyExtractor={(item, index) => index.toString()}/>
+                    <View style={styles.flatListContainer}>
+                        <FlatList
+                            style={styles.flatList}
+                            data={unfinishtasks}
+                            renderItem={this.renderItem}
+                            initialNumToRender={8}
+                            keyExtractor={(item, index) => index.toString()}/>
+                    </View>
                     {this.renderNextSheetButton()}
                 </View>
                 )
             }
     }
 
-    getDisplayScore(props)
-    {
-        const {score,tasklist} = props;
-        let userscore = 0;
-        let totalscore = 0;
-        score.map((score,index)=>
-        {
-            userscore+=score;
-            if (tasklist[index].point1) totalscore+=tasklist[index].point1
-                else totalscore++;
-        });
-        return {userscore,totalscore}
-    }
-
     render() {
         const {sheet, tasklist} = this.props;
         const title = sheet.title.toUpperCase();
-        const score = this.getDisplayScore(this.props);
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
@@ -142,10 +157,10 @@ class Result extends React.Component {
                     <Image style={styles.image} 
                         source={require('../../../../assets/png/score_circle.png')}/>
                     <Text style={styles.score}>
-                        {score.userscore}
+                        {this.state.userscore}
                     </Text>
                     <Text style={styles.totalPoint}>
-                        / {score.totalscore}
+                        / {this.state.totalscore}
                     </Text>
                 </View>
                 
@@ -169,4 +184,4 @@ class Result extends React.Component {
             )
     }
 }
-export default Result;
+export default connect(null,{getRecents})(Result);
