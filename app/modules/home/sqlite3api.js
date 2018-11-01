@@ -182,7 +182,7 @@ export function searchRecord(searchstring, callback)
 	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
-			tx.executeSql(`select * from LISTTABLE where title like '%` + searchstring + `%'`,
+			tx.executeSql(`select * from LISTTABLE where searchstring like '%` + searchstring + `%'`,
 				[],
 				(_,{rows}) => {
 					callback(true,rows._array,null);

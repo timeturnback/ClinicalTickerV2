@@ -6,7 +6,8 @@ import { Icon, Input, Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import styles from "./styles";
-import { theme, actions as home } from "../../index"
+import { theme, actions as home } from "../../index";
+import * as stringhelper from './stringhelper';
 
 const {color,normalize} = theme;
 const { searchRecord, getChecklist } = home;
@@ -64,7 +65,8 @@ class Search extends React.Component {
   }
 
   searchSubject = () => {
-    const { searchstring } = this.state;
+    let { searchstring } = this.state;
+    searchstring = stringhelper.toSearchableString(searchstring.toLowerCase());
     searchRecord(searchstring, this.handleResult, (error) => alert(error.message));
   }
 
