@@ -117,7 +117,7 @@ class Home extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={styles.imageNhiView}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=>this.onCategoryPress(c.CATEGORY_NHI)}>
                 <Image style={styles.imageNhi} source={require('../../../../assets/png/m_bt_nhi.png')}/>
               </TouchableOpacity>
             </View>
