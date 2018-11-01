@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StatusBar, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StatusBar, FlatList, TouchableOpacity, Keyboard} from 'react-native';
 import moment from 'moment';
 import {Actions} from 'react-native-router-flux';
 import { Icon, Input, Button } from 'react-native-elements';
@@ -65,6 +65,7 @@ class Search extends React.Component {
   }
 
   searchSubject = () => {
+    Keyboard.dismiss();
     let { searchstring } = this.state;
     searchstring = stringhelper.toSearchableString(searchstring.toLowerCase());
     searchRecord(searchstring, this.handleResult, (error) => alert(error.message));
@@ -100,6 +101,7 @@ class Search extends React.Component {
             autoCapitalize="none"  autoCorrect={false} 
             keyboardAppearance="light" returnKeyType="done" 
             ref={input => (this.searchInput = input)} 
+            onSubmitEditing={this.searchSubject}
             onChangeText={(text)=>this.setState({searchstring: text})}
             value={searchstring}
             blurOnSubmit={false} />
