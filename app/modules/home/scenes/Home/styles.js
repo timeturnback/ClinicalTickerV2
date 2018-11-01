@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
 
   iconContainer:{
-    flex:1.5,
+    flex:1.7,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.maincolor,
   },
   recentItems:{
-    flex:4,
+    flex:4.2,
     justifyContent: 'center',
   },
   itemTO:{
