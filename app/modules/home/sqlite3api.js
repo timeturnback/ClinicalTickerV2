@@ -28,13 +28,8 @@ export async function checkDatabase(callback)
 	    }
 	    else 
 	    	{
-	      		console.log('first time download');
-				try {
-				    await AsyncStorage.setItem('DATA_VERSION',c.APP_DATA_VERSION.toString());
-				} catch (error) {
-				 	alert(error.message);
-				}
-				db.transaction(tx => tx.executeSql('',
+	      	console.log('first time download');
+					db.transaction(tx => tx.executeSql('',
 					[],
 					null,
 					(_,error)=>{downloadDatabase(callback);}));
@@ -53,6 +48,7 @@ export function downloadDatabase(callback)
 	)
 	  .then(({ uri }) => {
 	    console.log('Finished downloading to ', uri);
+	    AsyncStorage.setItem('DATA_VERSION',c.APP_DATA_VERSION.toString());
 	    callback(true);
 	  })
 	  .catch(error => {

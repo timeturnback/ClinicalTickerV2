@@ -33,7 +33,7 @@ class Home extends React.Component {
   }
 
   onCategoryPress = (category) => {
-    getChecklists(category,this.onCPSuccess,(error) => {alert(error.message)});
+    getChecklists(category,this.onCPSuccess,(error) => {alert('onCategoryPress',error.message)});
   }
 
   onCPSuccess = (data) => {
