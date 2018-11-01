@@ -117,8 +117,6 @@ export function getSheetBySheetName(sheetname, callback)
 		);
 }
 
-
-
 export function getHistory(callback)
 {
 	database = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
@@ -171,6 +169,26 @@ export function saveResult(sheet,score,callback)
 				},
 				(_,error)=>{
 					callback(false,error);
+				}),
+			null,
+			null
+			}
+		);
+}
+
+
+export function searchRecord(searchstring, callback)
+{
+	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
+	database.transaction(
+		tx => {
+			tx.executeSql(`select * from LISTTABLE where title like '%` + searchstring + `%'`,
+				[],
+				(_,{rows}) => {
+					callback(true,rows._array,null);
+				},
+				(_,error)=>{
+					callback(false,null,error);
 				}),
 			null,
 			null

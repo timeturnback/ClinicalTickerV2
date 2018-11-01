@@ -27,6 +27,43 @@ const styles = StyleSheet.create({
     color: color.white,
   },
 
+ searchContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    paddingHorizontal: 10
+  },
+
+  ipContainerStyle: {
+    flex: 4,
+    marginRight: 10,
+  },
+
+  inputContainerStyle: {
+    height: 40, 
+    marginRight: 0,
+    borderRadius: 10, 
+    borderWidth: 1, 
+    borderColor: color.black, 
+  },
+
+  inputStyle: { 
+    marginLeft: 10, 
+    color: color.black 
+  },
+
+  btContainer: {
+    flex: 1.2,
+    height: 40,
+  }, 
+
+  buttonStyle: {
+    borderRadius:10,
+    backgroundColor: color.grey
+  },  
+
   flatListContainer:{
    flex: 10,
    justifyContent: 'center',

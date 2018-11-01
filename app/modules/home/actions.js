@@ -96,3 +96,15 @@ export function getRecents(errorCB)
 		})
 	}
 }
+
+export function searchRecord(searchstring,successCB,errorCB)
+{
+	api.searchRecord(searchstring,function(success,data,error)
+	{
+		if (success) 
+			{
+				successCB(data);
+			}
+		else if (error) errorCB(error);
+	})
+}

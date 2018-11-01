@@ -2,16 +2,23 @@ import React from 'react';
 import {View, Text, StatusBar, FlatList, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {Actions} from 'react-native-router-flux';
-import {Icon} from 'react-native-elements';
+import { Icon, Input, Button } from 'react-native-elements';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import styles from "./styles";
-import {theme} from "../../index"
+import { theme, actions as home } from "../../index"
 
 const {color,normalize} = theme;
+const { searchRecord } = home;
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      searchResults: [],
+      searchstring: ''
+    }
   }
 
   renderItem = ({item, index}) => {
@@ -19,24 +26,19 @@ class Search extends React.Component {
     return (
       <View style={[styles.wrapper, {backgroundColor: color, borderColor: color}]}>     
         <Text style={styles.subjectText}>
-          {item.TitleName}
+          {item.title}
         </Text>
-        <Text style={styles.tagText}>
-          {item.UserScore} / {item.TotalScore}
-        </Text>
-        <Text style={styles.tagText}>
-          {moment(parseInt(item.Date)).fromNow()}
-        </Text>
-        </View>
-        )
+      </View>
+    )
   }
 
-  renderFlatList = (historytabs) => {
-    if (historytabs && (historytabs.length > 0)) {
+  renderFlatList = () => {
+    const { searchResults } = this.state;
+    if (searchResults.length > 0) {
       return(
         <View style={styles.flatListContainer}>
           <FlatList
-            data={historytabs}
+            data={searchResults}
             renderItem={this.renderItem}
             initialNumToRender={8}
             keyExtractor={(item, index) => index.toString()}/>
@@ -46,14 +48,22 @@ class Search extends React.Component {
     else {
       return(
         <View style={styles.flatListContainer}>
-          <Text style={styles.flatlistPlaceholderText}> Bạn chưa thực hiện bảng kiểm nào</Text>
-          </View>)
+          <Text style={styles.flatlistPlaceholderText}> 0 kết quả </Text>
+        </View>)
     }
   }
 
-  render() {
-    const {historytabs} = this.props;
+  searchSubject = () => {
+    const { searchstring } = this.state;
+    searchRecord(searchstring, this.handleResult, (error) => alert(error.message));
+  }
 
+  handleResult = (data) => {
+    this.setState({searchResults: data})
+  }
+
+  render() {
+    const { searchstring } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={false} />
@@ -62,7 +72,34 @@ class Search extends React.Component {
             Tìm kiếm
           </Text>
         </View>
-        {this.renderFlatList(historytabs)}
+
+        <View style={styles.searchContainer}>
+          <Input 
+            containerStyle={styles.ipContainerStyle}
+            inputContainerStyle={styles.inputContainerStyle} 
+            leftIcon={<Ionicons 
+              name="ios-search" 
+              size={25} 
+              />} 
+            iconContainerStyle={{ marginLeft: 20 }} 
+            placeholder=" Tìm kiếm bảng ghi ..."
+            placeholderTextColor={color.grey}
+            inputStyle={styles.inputStyle} 
+            autoCapitalize="none"  autoCorrect={false} 
+            keyboardAppearance="light" returnKeyType="done" 
+            ref={input => (this.searchInput = input)} 
+            onChangeText={(text)=>this.setState({searchstring: text})}
+            value={searchstring}
+            blurOnSubmit={false} />
+          <Button
+            containerStyle={styles.btContainer}
+            buttonStyle={styles.buttonStyle}
+            onPress={this.searchSubject}
+            title='Search'/>
+        </View>
+
+        {this.renderFlatList()}
+
         <View style={styles.bottomContainer}>
           <TouchableOpacity onPress={Actions.pop}>
             <Icon

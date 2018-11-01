@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 
   categoryContainer:{
-    flex:2.7,
+    flex:2.5,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
