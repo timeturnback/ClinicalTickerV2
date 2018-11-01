@@ -72,7 +72,7 @@ class Home extends React.Component {
             case 3:
             {
                 const {recentItem3} = this.props;
-                getChecklist(recentItem1.tablename,(data)=>this.gotoChecklist(recentItem3,data),(error) => alert(error.message));
+                getChecklist(recentItem3.tablename,(data)=>this.gotoChecklist(recentItem3,data),(error) => alert(error.message));
                 break;
             }
         }

@@ -9,9 +9,10 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "ebitvn.medical.clinicaltickerv2"
     },
     "android": {
       "package": "ebitvn.medical.clinicaltickerv2"
