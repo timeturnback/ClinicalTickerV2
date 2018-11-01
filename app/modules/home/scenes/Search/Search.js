@@ -9,7 +9,7 @@ import styles from "./styles";
 import { theme, actions as home } from "../../index"
 
 const {color,normalize} = theme;
-const { searchRecord } = home;
+const { searchRecord, getChecklist } = home;
 
 class Search extends React.Component {
   constructor(props) {
@@ -21,14 +21,24 @@ class Search extends React.Component {
     }
   }
 
+  itemOnPress = (item) => {
+    getChecklist(item.tablename,(data) => this.gotoChecklist(item,data),(error) => alert(error.message));
+  }
+
+  gotoChecklist = (item,data) => {
+    Actions.Checklist({sheet: item,tasklist: data});
+  }
+
   renderItem = ({item, index}) => {
     const color = '#c4c4c4'
     return (
-      <View style={[styles.wrapper, {backgroundColor: color, borderColor: color}]}>     
-        <Text style={styles.subjectText}>
-          {item.title}
-        </Text>
-      </View>
+      <TouchableOpacity onPress={() => this.itemOnPress(item)}>
+        <View style={[styles.wrapper, {backgroundColor: color, borderColor: color}]}>     
+          <Text style={styles.subjectText}>
+            {item.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
     )
   }
 
