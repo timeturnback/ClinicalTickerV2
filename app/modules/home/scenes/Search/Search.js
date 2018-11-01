@@ -9,7 +9,7 @@ import {theme} from "../../index"
 
 const {color,normalize} = theme;
 
-class History extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -59,7 +59,7 @@ class History extends React.Component {
         <StatusBar hidden={false} />
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
-            Lịch sử
+            Tìm kiếm
           </Text>
         </View>
         {this.renderFlatList(historytabs)}
@@ -79,4 +79,4 @@ class History extends React.Component {
   }
 }
 
-export default History;
+export default Search;

@@ -128,29 +128,38 @@ class Home extends React.Component {
             </View>
           </View>
           <View style={styles.bottomContainer}>
-            <TouchableOpacity style={styles.historyIcon} onPress={this.onHistoryBtPress}>
+            <View style={styles.iconContainer}>
               <FontAwesome 
                 raised
                 name='history'
                 color='#353535'
-                size={35} />
-              </TouchableOpacity>
-              <View style={styles.recentTitle}>
-                <Text style={styles.titleText}> RECENT </Text>
-              </View>
-              <View style={styles.recentItems}>
-                <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(1)}>
-                  <Text numberOfLines={1} style={styles.itemText}> {recentItem1.title} </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(2)}>
-                  <Text numberOfLines={1} style={styles.itemText}> {recentItem2.title} </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(3)}>
-                  <Text numberOfLines={1} style={styles.itemText}> {recentItem3.title} </Text>
-                </TouchableOpacity>
-              </View>
+                size={40}
+                onPress={this.onHistoryBtPress}
+               />
+               <FontAwesome 
+                raised
+                name='search'
+                color='#353535'
+                size={40}
+                onPress={Actions.Search}
+               />
             </View>
-            </ImageBackground>
+            <View style={styles.recentTitle}>
+              <Text style={styles.titleText}> RECENT </Text>
+            </View>
+            <View style={styles.recentItems}>
+              <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(1)}>
+                <Text numberOfLines={1} style={styles.itemText}> {recentItem1.title} </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(2)}>
+                <Text numberOfLines={1} style={styles.itemText}> {recentItem2.title} </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.itemTO} onPress={()=>this.onRecentItemPress(3)}>
+                <Text numberOfLines={1} style={styles.itemText}> {recentItem3.title} </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
             )
     }
     else {

@@ -7,6 +7,7 @@ import ChecklistBoard from '../modules/home/scenes/ChecklistBoard';
 import Checklist from '../modules/home/scenes/Checklist';
 import Result from '../modules/home/scenes/Result';
 import History from '../modules/home/scenes/History';
+import Search from '../modules/home/scenes/Search';
 
 //support component
 import NavButton from '../components/NavButton';
@@ -51,6 +52,10 @@ export default class extends React.Component {
                 titleStyle={navTitleStyle}/>
               <Scene key="History"
                 component={History}
+                hideNavBar={true}
+                titleStyle={navTitleStyle}/>
+              <Scene key="Search"
+                component={Search}
                 hideNavBar={true}
                 titleStyle={navTitleStyle}/>
             </Stack>
