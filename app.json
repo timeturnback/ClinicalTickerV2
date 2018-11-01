@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ClinicalTickerV2",
+    "version": "1.0.2",
     "description": "Clinical Ticker by Dr Van Hai Long",
     "slug": "ClinicalTickerV2",
     "privacy": "unlisted",
@@ -9,7 +10,6 @@
       "ios",
       "android"
     ],
-    "version": "1.0.1",
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ebitvn.medical.clinicaltickerv2"
