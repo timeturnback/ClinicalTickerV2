@@ -3,17 +3,16 @@ import moment from 'moment';
 import { AsyncStorage } from "react-native"
 import * as c from "../../config/constants";
 
-export async function checkDatabase(callback)
-{	
+export async function checkDatabase(callback) {	
 	const db = SQLite.openDatabase(c.USER_DATABASE_LOCAL_NAME);
-		db.transaction(tx => tx.executeSql(`CREATE TABLE 'History' (
-				'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-				'SheetName'	TEXT NOT NULL,
-				'TitleName' TEXT NOT NULL,
-				'TotalScore'	INTEGER NOT NULL,
-				'UserScore'	INTEGER NOT NULL,
-				'Date'	TEXT NOT NULL
-			)`));
+	db.transaction(tx => tx.executeSql(`CREATE TABLE 'History' (
+		'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+		'SheetName'	TEXT NOT NULL,
+		'TitleName' TEXT NOT NULL,
+		'TotalScore'	INTEGER NOT NULL,
+		'UserScore'	INTEGER NOT NULL,
+		'Date'	TEXT NOT NULL
+	)`));
 	try {
 	    const value = await AsyncStorage.getItem('DATA_VERSION');
 	    if (value !== null) {
@@ -40,8 +39,7 @@ export async function checkDatabase(callback)
 	   }
 }
 
-export function downloadDatabase(callback)
-{
+export function downloadDatabase(callback) {
 	FileSystem.downloadAsync(
 	  Asset.fromModule(require('../../assets/data/pnt2data.db')).uri,
 	  FileSystem.documentDirectory + 'SQLite/' + c.APP_DATABASE_LOCAL_NAME
@@ -56,9 +54,8 @@ export function downloadDatabase(callback)
 	  });
 }
 
-export function getChecklists(category, callback)
-{
-	database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
+export function getChecklists(category, callback) {
+	const database = SQLite.openDatabase(c.APP_DATABASE_LOCAL_NAME);
 	database.transaction(
 		tx => {
 			tx.executeSql("select * from LISTTABLE where category like '%" + category + "%'",
